@@ -1,6 +1,6 @@
 ﻿namespace SpaceForce.VisitorManagement.Data.Models;
 
-public class SfUser
+public class SfUser:SfEntityBase
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

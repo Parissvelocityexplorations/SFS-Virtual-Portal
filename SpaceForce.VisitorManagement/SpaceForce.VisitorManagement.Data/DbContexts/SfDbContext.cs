@@ -35,15 +35,24 @@ public class SfDbContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<SfUser>().HasKey(x => x.Id);
+        modelBuilder.Entity<SfUser>().HasIndex(x => x.Email).IsUnique();
+        modelBuilder.Entity<SfUser>().Property(x => x.Email).IsRequired();
+        modelBuilder.Entity<SfUser>().Property(x => x.FirstName).IsRequired();
+        modelBuilder.Entity<SfUser>().Property(x => x.LastName).IsRequired();
+        modelBuilder.Entity<SfUser>().Property(x => x.PhoneNo).IsRequired();
         modelBuilder.Entity<SfUser>()
             .HasMany(x => x.Appointments)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId);
+        modelBuilder.Entity<SfAppointment>().HasKey(x => x.Id);
+        modelBuilder.Entity<SfAppointment>().Property(x => x.Date).IsRequired();
         modelBuilder.Entity<SfAppointment>()
             .HasOne(x => x.PassType)
             .WithMany(x => x.Appointments)
             .HasForeignKey(x => x.PassTypeId);
 
+        modelBuilder.Entity<SfAppointmentStatus>().HasKey(x => new {x.AppointmentId, x.StatusId});
         modelBuilder.Entity<SfAppointment>()
             .HasMany(x => x.Statuses)
             .WithOne(x => x.Appointment)

@@ -2,7 +2,7 @@ using SpaceForce.VisitorManagement.Data.Models.Enumerations;
 
 namespace SpaceForce.VisitorManagement.Data.Models;
 
-public class SfPassType
+public class SfPassType : SfEntityBase
 {
     public string Name { get; set; }
     public string Description { get; set; }
