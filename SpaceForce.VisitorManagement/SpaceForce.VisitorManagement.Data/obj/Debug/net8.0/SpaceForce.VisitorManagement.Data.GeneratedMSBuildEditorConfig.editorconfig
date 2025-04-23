@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SpaceForce.VisitorManagement.Data
-build_property.ProjectDir = /Users/gregory/Development/SFS-Virtual-Portal/SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Data/
+build_property.ProjectDir = C:\Users\hacker\Documents\SFS-Virtual-Portal\SpaceForce.VisitorManagement\SpaceForce.VisitorManagement.Data\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

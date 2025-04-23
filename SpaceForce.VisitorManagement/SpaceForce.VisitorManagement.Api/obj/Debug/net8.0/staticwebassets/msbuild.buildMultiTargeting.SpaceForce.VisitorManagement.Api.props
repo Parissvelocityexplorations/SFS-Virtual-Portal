@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\SpaceForce.VisitorManagement.Api.props" />
+</Project>
