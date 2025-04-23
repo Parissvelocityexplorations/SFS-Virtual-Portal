@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
 using SpaceForce.VisitorManagement.Data.Models;
+using SpaceForce.VisitorManagement.Data.DTOs;
 
 namespace SpaceForce.VisitorManagement.Api.Controllers
 {
@@ -18,20 +19,20 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("CreateUser")]
-        public IActionResult CreateUser(string firstName, string lastName, string email, string phoneNo)
+        [HttpPost]
+        public IActionResult CreateUser(SfUserDto testUser)
         {
             try
             {
-                var testUser = new SfUser
+                var user = new SfUser
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    PhoneNo = phoneNo
+                    FirstName = testUser.FirstName,
+                    LastName = testUser.LastName,
+                    Email = testUser.Email,
+                    PhoneNo = testUser.PhoneNo
                 };
 
-                _dbContext.Users.Add(testUser);
+                _dbContext.Users.Add(user);
                 _dbContext.SaveChanges();
                 return Ok();
             }
@@ -41,7 +42,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
-        [HttpGet("GetUsers")]
+        [HttpGet()]
         public async Task<IActionResult> GetUsers()
         {
             try
@@ -55,12 +56,12 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
-        [HttpGet("UpdateUser")]
-        public async Task<IActionResult> UpdateUserAsync(string id, string firstName, string lastName, string email, string phoneNo)
+        [HttpPut("userId/${userId}")]
+        public async Task<IActionResult> UpdateUserAsync(Guid userId, SfUserDto testUser)
         {
             try
             {
-                SfUser testUser = await _dbContext.Users.Where(x => x.Id.ToString() == id).SingleOrDefaultAsync();
+                SfUser user = await _dbContext.Users.Where(x => x.Id == userId).SingleOrDefaultAsync();
 
                 if (testUser == null)
                 {
@@ -68,36 +69,12 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                     return BadRequest();
                 }
 
-                testUser.FirstName = firstName;
-                testUser.LastName = lastName;
-                testUser.Email = email;
-                testUser.PhoneNo = phoneNo;
+                user.FirstName = testUser.FirstName;
+                user.LastName = testUser.LastName;
+                user.Email = testUser.Email;
+                user.PhoneNo = testUser.PhoneNo;
 
-                _dbContext.Users.Update(testUser);
-                _dbContext.SaveChanges();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return BadRequest(e);
-            }
-        }
-
-        [HttpGet("DeleteUser")]
-        public async Task<IActionResult> DeleteUser(string id)
-        {
-            try
-            {
-                SfUser testUser = await _dbContext.Users.Where(x => x.Id.ToString() == id).SingleOrDefaultAsync();
-
-                if (testUser == null)
-                {
-                    Console.WriteLine("User with given Id not found");
-                    return BadRequest();
-                }
-                
-                _dbContext.Users.Remove(testUser);
+                _dbContext.Users.Update(user);
                 _dbContext.SaveChanges();
                 return Ok();
             }
