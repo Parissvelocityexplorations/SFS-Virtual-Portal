@@ -5,5 +5,6 @@ public enum SfPassType
     GolfPass,
     VisitorPass,
     VetCard,
-    Contractor
+    Contractor,
+    NotSet
 }
