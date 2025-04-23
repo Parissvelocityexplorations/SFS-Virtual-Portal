@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/theme.css';
 
-export default function KioskHome() {
+export default function kioskHome() {
   const navigate = useNavigate();
 
   const handleStart = () => {

@@ -43,7 +43,7 @@ export default function Scanner() {
   };
   
   const handleExit = () => {
-    navigate('/kiosk');
+    navigate('/kioskhome');
   };
 
   return (
