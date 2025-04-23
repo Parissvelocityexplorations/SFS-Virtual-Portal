@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceForce.VisitorManagement.Data", "SpaceForce.VisitorManagement.Data\SpaceForce.VisitorManagement.Data.csproj", "{B1BF4484-ABCF-498D-8B31-4ADFC9080E6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceForce.VisitorManagement.Api", "SpaceForce.VisitorManagement.Api\SpaceForce.VisitorManagement.Api.csproj", "{28AD37E2-7D78-4A19-B08E-A1D731E77111}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1BF4484-ABCF-498D-8B31-4ADFC9080E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1BF4484-ABCF-498D-8B31-4ADFC9080E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1BF4484-ABCF-498D-8B31-4ADFC9080E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1BF4484-ABCF-498D-8B31-4ADFC9080E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AD37E2-7D78-4A19-B08E-A1D731E77111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AD37E2-7D78-4A19-B08E-A1D731E77111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AD37E2-7D78-4A19-B08E-A1D731E77111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AD37E2-7D78-4A19-B08E-A1D731E77111}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0B6B0E0-DC2D-402C-80D5-F6B34A236CD2}
+	EndGlobalSection
+EndGlobal

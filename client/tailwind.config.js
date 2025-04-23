@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#007BFF",    // Deep Sky Blue
-        secondary: "#20C997",  // Teal
-        accent: "#FF6B6B",     // Coral Orange
-        background: "#F8F9FA", // Soft Light Gray
-        surface: "#FFFFFF",    // White
-        "text-primary": "#343A40",   // Charcoal
-        "text-secondary": "#6C757D", // Slate Gray
-        divider: "#E9ECEF",    // Light Gray
+        primary: "#2CAFE3",    // Blue - Buttons, highlights, icons, links
+        secondary: "#33C048",  // Green - Submit buttons
+        "text-primary": "#666666",   // Dark Gray - Text, icons
+        divider: "#E5E5E5",    // Light Gray - Borders, section dividers, panel backgrounds
+        background: "#F5F9FB", // Pale Blue - Main page background
+        surface: "#FFFFFF",    // White - Main form panel backgrounds and inputs
+        link: "#0071BC",       // Link Blue - Used in hyperlinks
+        "text-secondary": "#6C757D", // Slate Gray - Hints, captions, disabled form labels
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
