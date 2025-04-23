@@ -21,7 +21,14 @@ type Service = {
 export default function ServiceSelection() {
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    sponsor: ''
+  });
+
   const services: Service[] = [
     {
       id: 'golf',
@@ -53,10 +60,18 @@ export default function ServiceSelection() {
     setSelectedService(serviceId);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleContinue = () => {
-    if (selectedService) {
-      // In a real app, we'd store the selected service in state or context
+    if (selectedService && formData.firstName && formData.lastName) {
+      // In a real app, you could store this in context or send to server
+      console.log('Form Data:', formData);
+      console.log('Selected Service:', selectedService);
       navigate('/kiosk/schedule');
+    } else {
+      alert('Please complete the form and select a service.');
     }
   };
 
@@ -70,11 +85,64 @@ export default function ServiceSelection() {
       title="Select a Service"
       onBack={handleBack}
     >
-      <div className="py-4">
+      <h1 className="text-4xl font-bold mb-6">Sign In</h1>
+
+      {/* Visitor Info Form */}
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full mb-10">
+        <input
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          placeholder="First Name"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        />
+        <input
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Last Name"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        />
+        <input
+          type="text"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="Phone Number"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email Address"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        />
+        <input
+          type="text"
+          name="sponsor"
+          value={formData.sponsor}
+          onChange={handleChange}
+          placeholder="Sponsor Name"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handleContinue}
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all"
+        >
+          Sign In
+        </button>
+      </div>
+
+      {/* Service Selection */}
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full">
         <p className="text-text-secondary mb-6">
           Please select the service you need from the options below:
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {services.map((service) => (
             <ServiceCard
@@ -87,15 +155,15 @@ export default function ServiceSelection() {
             />
           ))}
         </div>
-        
+
         <div className="flex justify-end">
           <button
             onClick={handleContinue}
             disabled={!selectedService}
             className={`px-6 py-3 rounded-md text-white ${
               selectedService 
-                ? 'bg-secondary hover:bg-opacity-90' 
-                : 'bg-divider cursor-not-allowed'
+                ? 'bg-blue-600 hover:bg-blue-700' 
+                : 'bg-gray-300 cursor-not-allowed'
             }`}
           >
             NEXT
