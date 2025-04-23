@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Data\\SpaceForce.VisitorManagement.Data.csproj": {}
+    "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\SpaceForce.VisitorManagement.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Data\\SpaceForce.VisitorManagement.Data.csproj": {
+    "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\SpaceForce.VisitorManagement.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Data\\SpaceForce.VisitorManagement.Data.csproj",
-        "projectName": "SpaceForce.VisitorManagement.Data",
-        "projectPath": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Data\\SpaceForce.VisitorManagement.Data.csproj",
+        "projectUniqueName": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\SpaceForce.VisitorManagement.Api.csproj",
+        "projectName": "SpaceForce.VisitorManagement.Api",
+        "projectPath": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\SpaceForce.VisitorManagement.Api.csproj",
         "packagesPath": "C:\\Users\\hacker\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Data\\obj\\",
+        "outputPath": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,6 +67,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
