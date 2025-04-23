@@ -35,15 +35,18 @@ public class SfDbContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<SfUser>().HasKey(x => x.Id);
         modelBuilder.Entity<SfUser>()
             .HasMany(x => x.Appointments)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId);
+        modelBuilder.Entity<SfAppointment>().HasKey(x => x.Id);
         modelBuilder.Entity<SfAppointment>()
             .HasOne(x => x.PassType)
             .WithMany(x => x.Appointments)
             .HasForeignKey(x => x.PassTypeId);
 
+        modelBuilder.Entity<SfAppointmentStatus>().HasKey(x => new {x.AppointmentId, x.StatusId});
         modelBuilder.Entity<SfAppointment>()
             .HasMany(x => x.Statuses)
             .WithOne(x => x.Appointment)

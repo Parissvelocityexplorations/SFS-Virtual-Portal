@@ -67,3 +67,6 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db 
+**/bin/*
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/obj
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/bin
