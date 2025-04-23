@@ -68,5 +68,24 @@ coverage/
 ehthumbs.db
 Thumbs.db 
 **/bin/*
-SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/obj
-SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/bin
+**/obj/*
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/obj/
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/bin/
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Data/obj/
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Data/bin/
+bin/
+obj/
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/obj/**/*
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/bin/**/*
+SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/bin/Debug/net8.0/SpaceForce.VisitorManagement.Api.dll
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
