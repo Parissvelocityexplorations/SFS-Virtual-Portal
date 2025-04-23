@@ -22,7 +22,16 @@ module.exports = {
   ignorePatterns: ["!**/.server", "!**/.client"],
 
   // Base config
-  extends: ["eslint:recommended"],
+  extends: [
+    "eslint:recommended",
+    "prettier"
+  ],
+  plugins: ["prettier"],
+  rules: {
+    "prettier/prettier": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "prefer-arrow-callback": "error"
+  },
 
   overrides: [
     // React
