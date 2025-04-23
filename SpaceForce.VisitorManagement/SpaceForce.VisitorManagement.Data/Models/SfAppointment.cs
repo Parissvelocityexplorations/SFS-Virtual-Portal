@@ -1,3 +1,5 @@
+using SpaceForce.VisitorManagement.Data.Models.Enumerations;
+
 namespace SpaceForce.VisitorManagement.Data.Models;
 
 public class SfAppointment:SfEntityBase
@@ -9,8 +11,8 @@ public class SfAppointment:SfEntityBase
     #region Relations
     
     public SfUser? User { get; set; }
-    public SfPassType? PassType { get; set; }
-    public ICollection<SfAppointmentStatus> Statuses { get; set; } = new HashSet<SfAppointmentStatus>();
+    public SfPassType PassType { get; set; } = SfPassType.NotSet;
+    public SfStatus Status { get; set; } = SfStatus.NotSet;
 
     #endregion
 }
