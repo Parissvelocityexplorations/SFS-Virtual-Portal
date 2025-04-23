@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SpaceForce.VisitorManagement.Data.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
 using SpaceForce.VisitorManagement.Data.Models;
