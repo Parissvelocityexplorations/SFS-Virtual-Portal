@@ -1,20 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "UlohDy0uGkc=",
+  "dgSpecHash": "BIFpVLTPk3U=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hacker\\Documents\\SFS-Virtual-Portal\\SpaceForce.VisitorManagement\\SpaceForce.VisitorManagement.Api\\SpaceForce.VisitorManagement.Api.csproj",
+  "projectFilePath": "/Users/gregory/Development/SFS-Virtual-Portal/SpaceForce.VisitorManagement/SpaceForce.VisitorManagement.Api/SpaceForce.VisitorManagement.Api.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\hacker\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
-    "C:\\Users\\hacker\\.nuget\\packages\\mailkit\\4.11.0\\mailkit.4.11.0.nupkg.sha512",
     "C:\\Users\\hacker\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\hacker\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
-    "C:\\Users\\hacker\\.nuget\\packages\\mimekit\\4.11.0\\mimekit.4.11.0.nupkg.sha512",
     "C:\\Users\\hacker\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\hacker\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\hacker\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
-    "C:\\Users\\hacker\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512",
-    "C:\\Users\\hacker\\.nuget\\packages\\system.formats.asn1\\8.0.1\\system.formats.asn1.8.0.1.nupkg.sha512",
-    "C:\\Users\\hacker\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
+    "C:\\Users\\hacker\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
   ],
   "logs": []
 }

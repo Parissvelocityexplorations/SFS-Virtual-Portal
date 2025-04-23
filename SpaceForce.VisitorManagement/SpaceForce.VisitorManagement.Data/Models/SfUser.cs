@@ -1,6 +1,6 @@
 ﻿namespace SpaceForce.VisitorManagement.Data.Models;
 
-public class SfUser
+public class SfUser:SfEntityBase
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -8,9 +8,9 @@ public class SfUser
     public string PhoneNo { get; set; }
     
     #region Relations
-    
-    
-    
+
+    public ICollection<SfAppointment> Appointments { get; set; } = new HashSet<SfAppointment>();
+
     #endregion
-    
+
 }
