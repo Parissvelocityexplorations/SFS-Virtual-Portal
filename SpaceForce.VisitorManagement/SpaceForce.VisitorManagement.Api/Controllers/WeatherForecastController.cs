@@ -41,7 +41,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
             try
             {
                 List<SfUser> users = await _dbContext.Users.ToListAsync();
-                return Ok(users);
+                return Ok(new DateTime());
             }
             catch (Exception e)
             {

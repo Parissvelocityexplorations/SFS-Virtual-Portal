@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
@@ -17,6 +18,20 @@ public class AppointmentsController : ControllerBase
         _dbContext = dbContext;
     }
 
+    [HttpGet("userId/${userId}")]
+    public async Task<IActionResult> GetAsync(Guid userId)
+    {
+        try
+        {
+            List<SfAppointment> appts = await _dbContext.Appointments.Where(x => x.UserId == userId).ToListAsync();
+            return Ok(appts);
+        }
+        catch (Exception e)
+        {
+            return BadRequest($"Unable to retrieve appointments for user {userId}.  Details: {e.Message}");
+        }
+    }
+    
     [HttpPost("userid/{userId}/date/{date}")]
     public async Task<IActionResult> AddAsync(Guid userId, DateTime date)
     {
@@ -56,6 +71,11 @@ public class AppointmentsController : ControllerBase
                 throw new Exception($"Unable to find an appointment with the ID {appointmentId}");
             }
 
+            if (status == SfStatus.NotSet)
+            {
+                return BadRequest("Invalid status.  Cannot update the status to NotSet");
+            }
+
             switch (appt.Status)
             {
                 case SfStatus.Scheduled when status != SfStatus.CheckedIn && status != SfStatus.Cancelled:
@@ -67,8 +87,6 @@ public class AppointmentsController : ControllerBase
                 case SfStatus.Served:
                 case SfStatus.Cancelled:
                     return BadRequest("Invalid status.  This appointment is complete.");
-                case SfStatus.NotSet:
-                    return BadRequest("Invalid status.  NotSet is an invalid option.");
             }
 
             appt.Status = status;
