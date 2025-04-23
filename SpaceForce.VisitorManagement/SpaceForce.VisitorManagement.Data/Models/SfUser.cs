@@ -8,9 +8,9 @@ public class SfUser
     public string PhoneNo { get; set; }
     
     #region Relations
-    
-    
-    
+
+    public ICollection<SfAppointment> Appointments { get; set; } = new HashSet<SfAppointment>();
+
     #endregion
-    
+
 }
