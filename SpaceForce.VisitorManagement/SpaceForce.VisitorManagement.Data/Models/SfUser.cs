@@ -1,4 +1,4 @@
-﻿namespace SpaceForce.VisitorManagement.Data;
+﻿namespace SpaceForce.VisitorManagement.Data.Models;
 
 public class SfUser
 {

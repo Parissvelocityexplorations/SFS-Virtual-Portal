@@ -1,4 +1,4 @@
-namespace SpaceForce.VisitorManagement.Data.Enumerations;
+namespace SpaceForce.VisitorManagement.Data.Models.Enumerations;
 
 public enum SfPassType
 {
