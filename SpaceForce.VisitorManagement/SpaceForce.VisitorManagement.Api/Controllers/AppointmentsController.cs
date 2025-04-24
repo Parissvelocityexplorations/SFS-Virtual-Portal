@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
@@ -18,6 +17,24 @@ public class AppointmentsController : ControllerBase
         _dbContext = dbContext;
     }
 
+    [HttpGet("filter/startDate/{startDate}/endDate/{endDate}")]
+    public async Task<IActionResult> GetByFilterAsync(DateTime startDate, DateTime? endDate, [FromQuery]List<SfStatus> statuses)
+    {
+        List<SfAppointment> appts = await _dbContext.Appointments
+            .Where(x => x.Date >= startDate && x.Date <= endDate)
+            .Where(y => statuses.Contains(y.Status))
+            .ToListAsync();
+        return Ok(appts);
+        
+        /*
+         * var names = new[] { "Blog1", "Blog2" };
+
+           var blogs = await context.Blogs
+               .Where(b => names.Contains(b.Name))
+               .ToArrayAsync();
+         */
+    }
+
     [HttpGet("userId/${userId}")]
     public async Task<IActionResult> GetAsync(Guid userId)
     {
@@ -31,7 +48,7 @@ public class AppointmentsController : ControllerBase
             return BadRequest($"Unable to retrieve appointments for user {userId}.  Details: {e.Message}");
         }
     }
-    
+
     [HttpPost("userid/{userId}/date/{date}")]
     public async Task<IActionResult> AddAsync(Guid userId, DateTime date)
     {
@@ -58,7 +75,7 @@ public class AppointmentsController : ControllerBase
             return BadRequest($"Error creating an appointment.  Details:  {e.Message}");
         }
     }
-    
+
     [HttpPut("{appointmentId}/status/{status}")]
     public async Task<IActionResult> UpdateStatusAsync(Guid appointmentId, SfStatus status)
     {

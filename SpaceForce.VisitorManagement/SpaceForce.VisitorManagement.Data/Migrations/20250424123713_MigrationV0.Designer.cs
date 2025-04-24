@@ -12,8 +12,8 @@ using SpaceForce.VisitorManagement.Data.DbContexts;
 namespace SpaceForce.VisitorManagement.Data.Migrations
 {
     [DbContext(typeof(SfDbContext))]
-    [Migration("20250423201716_MigrationV2")]
-    partial class MigrationV2
+    [Migration("20250424123713_MigrationV0")]
+    partial class MigrationV0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,9 +42,6 @@ namespace SpaceForce.VisitorManagement.Data.Migrations
 
                     b.Property<int>("PassType")
                         .HasColumnType("integer");
-
-                    b.Property<Guid>("PassTypeId")
-                        .HasColumnType("uuid");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
