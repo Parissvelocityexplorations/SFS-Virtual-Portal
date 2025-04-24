@@ -64,7 +64,7 @@ export default function Confirmation() {
             const date = JSON.parse(storedAppointment).formattedDate || 'Scheduled Date';
             const time = JSON.parse(storedAppointment).time || 'Scheduled Time';
             
-            const emailBody = `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Building 237, Pass Office%0A- Confirmation ID: ${confirmId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
+            const emailBody = `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Pass Office, Patrick Space Force Base, FL 32925%0A- Confirmation ID: ${confirmId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
             
             // In a production app, this would send the confirmation data to the backend
             // For demo purposes, we'll just log what would be sent
@@ -117,7 +117,7 @@ export default function Confirmation() {
     const date = appointmentDetails?.formattedDate || 'Scheduled Date';
     const time = appointmentDetails?.time || 'Scheduled Time';
     
-    return `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Building 237, Pass Office%0A- Confirmation ID: ${confirmationId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
+    return `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Pass Office, Patrick Space Force Base, FL 32925%0A- Confirmation ID: ${confirmationId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
   };
 
   if (loading) {
@@ -212,7 +212,7 @@ export default function Confirmation() {
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Location:</span>
-                <span className="font-medium">Patrick Space Force Base, FL 32925</span>
+                <span className="font-medium">Pass Office, Patrick Space Force Base, FL 32925</span>
               </div>
             </div>
           </div>
@@ -271,7 +271,7 @@ export default function Confirmation() {
             <div className="font-medium text-yellow-900">2:00 PM</div>
             
             <div className="text-yellow-800">Location:</div>
-            <div className="font-medium text-yellow-900">Patrick Space Force Base, FL 32925</div>
+            <div className="font-medium text-yellow-900">Pass Office, Patrick Space Force Base, FL 32925</div>
           </div>
         </div>
         
@@ -294,9 +294,9 @@ export default function Confirmation() {
           </div>
           
           <div>
-            <h4 className="text-lg font-medium mb-2">Hours of Operation</h4>
-            <p className="text-text-secondary">Monday - Friday: 7:30 a.m. to 3 p.m.</p>
-            <p className="text-text-secondary">Saturday & Sunday: Closed</p>
+            <h4 className="text-lg font-medium mb-2">VCC Hours</h4>
+            <p className="text-text-secondary">7:30 a.m. to 3 p.m.</p>
+            <p className="text-text-secondary">Closed Sat & Sun</p>
             
             <div className="mt-4">
               <a 
