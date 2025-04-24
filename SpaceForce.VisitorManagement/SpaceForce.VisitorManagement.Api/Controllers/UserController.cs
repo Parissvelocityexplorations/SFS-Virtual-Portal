@@ -18,20 +18,46 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(SfUserDto testUser)
+        public async Task<IActionResult> CreateUser(SfUserDto data)
         {
             try
             {
-                var user = new SfUser
+                if (string.IsNullOrEmpty(data.Email))
                 {
-                    FirstName = testUser.FirstName,
-                    LastName = testUser.LastName,
-                    Email = testUser.Email,
-                    PhoneNo = testUser.PhoneNo
+                    return BadRequest("Invalid email address.  Email address must be a non-empty value");
+                }
+
+                if (string.IsNullOrEmpty(data.FirstName))
+                {
+                    return BadRequest("Invalid first name.  First name must be a non-empty value.");
+                }
+
+                if (string.IsNullOrEmpty(data.LastName))
+                {
+                    return BadRequest("Invalid last name.  Last name must be a non-empty value.");
+                }
+
+                if (string.IsNullOrEmpty(data.PhoneNo))
+                {
+                    return BadRequest("Invalid phone number.  Phone number must be a non-empty value.");
+                }
+
+                SfUser? user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == data.Email.ToLower());
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+
+                user = new SfUser
+                {
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Email = data.Email,
+                    PhoneNo = data.PhoneNo
                 };
 
                 _dbContext.Users.Add(user);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
@@ -40,6 +66,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
+
         [HttpGet("/allUsers")]
         public async Task<IActionResult> GetUsers()
         {
@@ -54,6 +81,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
+
         [HttpGet("userId/${userId}")]
         public async Task<IActionResult> GetUser(Guid userId)
         {
@@ -68,14 +96,15 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
+
         [HttpPut("userId/${userId}")]
         public async Task<IActionResult> UpdateUserAsync(Guid userId, SfUserDto testUser)
         {
             try
             {
-                SfUser user = await _dbContext.Users.Where(x => x.Id == userId).SingleOrDefaultAsync();
+                SfUser? user = await _dbContext.Users.Where(x => x.Id == userId).SingleOrDefaultAsync();
 
-                if (testUser == null)
+                if (user == null)
                 {
                     Console.WriteLine("User with given Id not found");
                     return BadRequest();
@@ -87,7 +116,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 user.PhoneNo = testUser.PhoneNo;
 
                 _dbContext.Users.Update(user);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
