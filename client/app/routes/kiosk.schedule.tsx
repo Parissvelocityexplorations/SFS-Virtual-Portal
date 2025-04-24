@@ -52,17 +52,39 @@ export default function Schedule() {
     setSelectedTime(time);
   };
   
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (selectedDate && selectedTime) {
-      // Store appointment details
-      const appointmentDetails = {
-        date: selectedDate.toISOString(),
-        time: selectedTime,
-        formattedDate: formatDate(selectedDate)
-      };
-      
-      localStorage.setItem('appointmentDetails', JSON.stringify(appointmentDetails));
-      navigate('/kiosk/review');
+      try {
+        // Store appointment details
+        const appointmentDetails = {
+          date: selectedDate.toISOString(),
+          time: selectedTime,
+          formattedDate: formatDate(selectedDate)
+        };
+        
+        // Send to backend if user info and service are available
+        if (userInfo && selectedService) {
+          // Create appointment data for API
+          const appointmentData = {
+            visitorId: userInfo.email, // Using email as unique identifier
+            serviceType: selectedService,
+            appointmentDate: selectedDate.toISOString(),
+            timeSlot: selectedTime,
+            status: "Scheduled"
+          };
+          
+          // In a production app, this would post to the API
+          // For demo purposes, we'll just log the data and continue
+          console.log('Appointment data that would be sent to backend:', appointmentData);
+          
+          // No actual API call for demo
+        }
+        
+        localStorage.setItem('appointmentDetails', JSON.stringify(appointmentDetails));
+        navigate('/kiosk/review');
+      } catch (error) {
+        console.error('Error creating appointment:', error);
+      }
     }
   };
   

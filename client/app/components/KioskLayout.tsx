@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ProgressSteps from './ProgressSteps';
-import { useNavigate } from '@remix-run/react';
+import { useNavigate, useLocation } from '@remix-run/react';
 
 type KioskLayoutProps = {
   children: React.ReactNode;
@@ -20,7 +20,21 @@ export default function KioskLayout({
   showProgressSteps = true
 }: KioskLayoutProps) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const contentRef = useRef<HTMLDivElement>(null);
   
+  // State for page transition animations
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const [pageTransitionDirection, setPageTransitionDirection] = useState<'forward' | 'backward'>('forward');
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  const [prevStep, setPrevStep] = useState(currentStep);
+  const [animatingStep, setAnimatingStep] = useState(currentStep);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isProgressAnimating, setIsProgressAnimating] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isCompactView, setIsCompactView] = useState(false);
+  
+  // Steps for the progress indicator
   const steps = [
     "Start",
     "Information",
@@ -29,6 +43,102 @@ export default function KioskLayout({
     "Review",
     "Confirmation"
   ];
+
+  // Check for client-side window after component mounts
+  useEffect(() => {
+    setIsMounted(true);
+    
+    // Set compact view based on window width
+    if (typeof window !== 'undefined') {
+      setIsCompactView(window.innerWidth < 768);
+      
+      const handleResize = () => {
+        setIsCompactView(window.innerWidth < 768);
+      };
+      
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  // Handle step changes for smooth transitions
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    
+    // Only animate if the step has actually changed
+    if (currentStep !== prevStep) {
+      // Determine direction
+      const direction = currentStep > prevStep ? 'forward' : 'backward';
+      setPageTransitionDirection(direction);
+      
+      // Start page transition out
+      setIsPageTransitioning(true);
+      setIsProgressAnimating(true);
+      
+      // Begin fade-out animation for current content
+      const fadeOutTimer = setTimeout(() => {
+        // Update step for progress bar animation
+        setAnimatingStep(currentStep);
+        
+        // Begin fade-in animation for new content
+        const fadeInTimer = setTimeout(() => {
+          setIsPageTransitioning(false);
+          
+          // After content is visible, update step state
+          setPrevStep(currentStep);
+          
+          // Complete progress animation after content is visible
+          const progressCompleteTimer = setTimeout(() => {
+            setIsProgressAnimating(false);
+          }, 300);
+          
+          return () => clearTimeout(progressCompleteTimer);
+        }, 400);
+        
+        return () => clearTimeout(fadeInTimer);
+      }, 300);
+      
+      return () => clearTimeout(fadeOutTimer);
+    }
+  }, [currentStep, prevStep, isFirstRender]);
+
+  // Handle path changes for location-based transitions
+  useEffect(() => {
+    if (isFirstRender) return;
+    
+    // Only handle transitions not triggered by step changes
+    if (currentStep === prevStep) {
+      const newDirection = location.pathname.length > prevPath.length ? 'forward' : 'backward';
+      setPageTransitionDirection(newDirection);
+      setIsPageTransitioning(true);
+      
+      // Reset transition state after animation completes
+      const resetTimer = setTimeout(() => {
+        setIsPageTransitioning(false);
+      }, 600);
+      
+      // Update stored path
+      setPrevPath(location.pathname);
+      
+      return () => clearTimeout(resetTimer);
+    }
+  }, [location.pathname, prevPath, isFirstRender, currentStep, prevStep]);
+  
+  // Handle back navigation with transition
+  const handleBackWithTransition = () => {
+    if (onBack) {
+      setPageTransitionDirection('backward');
+      setIsPageTransitioning(true);
+      
+      // Slight delay for animation to start before navigation
+      setTimeout(() => {
+        onBack();
+      }, 50);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-geometric">
@@ -60,16 +170,24 @@ export default function KioskLayout({
           {/* Decorative accent strip */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-secondary"></div>
           
-          {/* Progress steps */}
+          {/* Progress steps with flowing transitions */}
           {showProgressSteps && (
-            <ProgressSteps steps={steps} currentStep={currentStep} />
+            <div className="progress-container">
+              <ProgressSteps 
+                steps={steps} 
+                currentStep={animatingStep}
+                className={isProgressAnimating ? 'animating' : ''}
+                colorTheme="primary"
+                variant={isCompactView ? 'compact' : 'default'}
+              />
+            </div>
           )}
           
           {/* Page heading with back button */}
           <div className="mb-8 flex items-center">
             {showBackButton && (
               <button 
-                onClick={onBack}
+                onClick={handleBackWithTransition}
                 className="outline sm mr-4 flex items-center font-medium"
                 aria-label="Go back"
               >
@@ -82,8 +200,17 @@ export default function KioskLayout({
             <h2 className="text-2xl font-bold text-text-primary tracking-tight">{title}</h2>
           </div>
           
-          {/* Main content */}
-          <div className="relative">
+          {/* Main content with page transition */}
+          <div 
+            ref={contentRef}
+            className={`relative transition-all duration-500 ease-in-out ${
+              isPageTransitioning 
+                ? pageTransitionDirection === 'forward' 
+                  ? 'opacity-0 translate-x-8 scale-[0.98]' 
+                  : 'opacity-0 -translate-x-8 scale-[0.98]'
+                : 'opacity-100 translate-x-0 scale-100'
+            }`}
+          >
             {children}
           </div>
         </div>
@@ -107,6 +234,44 @@ export default function KioskLayout({
           </div>
         </footer>
       </div>
+      
+      {/* Page transition style */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .progress-container {
+          transition: all 0.4s ease-out;
+        }
+        
+        .progress-container.animating {
+          opacity: 0.9;
+        }
+        
+        @keyframes flow-progress {
+          0% { transform: translateY(0); opacity: 1; }
+          40% { transform: translateY(-10px); opacity: 0; }
+          60% { transform: translateY(10px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slide-in-right {
+          0% { transform: translateX(30px) scale(0.97); opacity: 0; }
+          100% { transform: translateX(0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes slide-in-left {
+          0% { transform: translateX(-30px) scale(0.97); opacity: 0; }
+          100% { transform: translateX(0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes slide-out-right {
+          0% { transform: translateX(0) scale(1); opacity: 1; }
+          100% { transform: translateX(30px) scale(0.97); opacity: 0; }
+        }
+        
+        @keyframes slide-out-left {
+          0% { transform: translateX(0) scale(1); opacity: 1; }
+          100% { transform: translateX(-30px) scale(0.97); opacity: 0; }
+        }
+      `}} />
     </div>
   );
 }

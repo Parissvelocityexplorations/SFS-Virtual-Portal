@@ -20,20 +20,68 @@ export default function Scanner() {
     time: string;
     name: string;
     status: string;
+    location: string;
   }>(null);
   
   // This function simulates scanning a barcode
   const handleScan = () => {
-    // In a real app, this would use the device camera to scan a barcode
-    // For this demo, we're simulating a successful scan
+    // In a real app, this would use the device camera to scan a QR code
+    // For this demo, we'll simulate scanning by retrieving the data we stored
+    
+    // Get the stored data
+    const appointmentDetails = localStorage.getItem('appointmentDetails');
+    const userInfo = localStorage.getItem('visitorInfo');
+    const serviceType = localStorage.getItem('selectedService');
+    const confirmationId = localStorage.getItem('confirmationId');
+    
+    let appointmentDate = '';
+    let appointmentTime = '';
+    let visitorName = '';
+    let serviceName = '';
+    let bookingId = confirmationId || 'PASS-92384765';
+    
+    // Parse the appointment details
+    if (appointmentDetails) {
+      try {
+        const details = JSON.parse(appointmentDetails);
+        appointmentDate = details.formattedDate || '';
+        appointmentTime = details.time || '';
+      } catch (error) {
+        console.error('Error parsing appointment details:', error);
+      }
+    }
+    
+    // Parse user info
+    if (userInfo) {
+      try {
+        const user = JSON.parse(userInfo);
+        visitorName = `${user.firstName} ${user.lastName}`.trim();
+      } catch (error) {
+        console.error('Error parsing user info:', error);
+      }
+    }
+    
+    // Get service name
+    if (serviceType) {
+      const services: {[key: string]: string} = {
+        'golf': 'Golf Pass',
+        'visitor': 'Visitor Pass',
+        'vhic': 'Veteran Health ID Card',
+        'dbids': 'DBIDS Card'
+      };
+      serviceName = services[serviceType] || 'Selected Service';
+    }
+    
+    // Simulate a successful scan
     setScanned(true);
     setBookingDetails({
-      id: 'PASS-92384765',
-      service: 'Golf Pass',
-      date: 'Thursday, May 15, 2025',
-      time: '9:30 AM',
-      name: 'John Smith',
-      status: 'Confirmed'
+      id: bookingId,
+      service: serviceName || 'Visitor Pass',
+      date: appointmentDate || 'Saturday, April 26, 2025',
+      time: appointmentTime || '2:00 PM',
+      name: visitorName || 'John Doe',
+      status: 'Confirmed',
+      location: 'Patrick Space Force Base, FL 32925'
     });
   };
   
@@ -132,6 +180,11 @@ export default function Scanner() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                   <div className="text-text-secondary">Time:</div>
                   <div className="md:col-span-2 font-medium">{bookingDetails?.time}</div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <div className="text-text-secondary">Location:</div>
+                  <div className="md:col-span-2 font-medium">{bookingDetails?.location}</div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">

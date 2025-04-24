@@ -37,7 +37,7 @@ export default function Confirmation() {
     
     // Check if we have all the required data
     if (!storedUserInfo || !storedService || !storedAppointment) {
-      // For demo purposes, we'll just use default values instead of redirecting
+      // For demo purposes, we'll just use specified values instead of redirecting
       setUserData({
         firstName: 'John',
         lastName: 'Doe',
@@ -46,12 +46,13 @@ export default function Confirmation() {
       });
       setSelectedService('visitor');
       setAppointmentDetails({
-        formattedDate: 'Thursday, May 15, 2025',
-        time: '9:30 AM'
+        formattedDate: 'Saturday, April 26, 2025',
+        time: '2:00 PM'
       });
     } else {
       try {
-        setUserData(JSON.parse(storedUserInfo));
+        const parsedUserData = JSON.parse(storedUserInfo);
+        setUserData(parsedUserData);
         setSelectedService(storedService);
         setAppointmentDetails(JSON.parse(storedAppointment));
 
@@ -170,19 +171,19 @@ export default function Confirmation() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-text-secondary">Service:</span>
-                <span className="font-medium">{selectedService && getServiceName(selectedService)}</span>
+                <span className="font-medium">Visitor Pass</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Date:</span>
-                <span className="font-medium">{appointmentDetails?.formattedDate}</span>
+                <span className="font-medium">Saturday, April 26, 2025</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Time:</span>
-                <span className="font-medium">{appointmentDetails?.time}</span>
+                <span className="font-medium">2:00 PM</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Location:</span>
-                <span className="font-medium">Building 237, Pass Office</span>
+                <span className="font-medium">Patrick Space Force Base, FL 32925</span>
               </div>
             </div>
           </div>
@@ -213,16 +214,6 @@ export default function Confirmation() {
             Print Confirmation
           </button>
           
-          {/* <button
-            onClick={handleEmail}
-            className="px-6 py-4 rounded-lg border-2 border-divider hover:border-primary flex items-center justify-center font-medium transition-all"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-            Email Confirmation
-          </button> */}
-          
           <button
             onClick={handleNewAppointment}
             className="px-6 py-4 rounded-lg bg-primary text-white hover:bg-opacity-90 flex items-center justify-center font-medium transition-all hover:shadow-lg transform hover:-translate-y-1"
@@ -232,6 +223,66 @@ export default function Confirmation() {
             </svg>
             New Appointment
           </button>
+        </div>
+      </div>
+      
+      <div className="bg-white p-6 rounded-lg shadow-md border border-divider mb-8">
+        <h3 className="text-xl font-medium text-primary mb-4 text-center">Visitors Control Center Information</h3>
+        
+        <div className="mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+          <h4 className="text-lg font-medium mb-2 text-yellow-800">Appointment Summary</h4>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="text-yellow-800">Service:</div>
+            <div className="font-medium text-yellow-900">Visitor Pass</div>
+            
+            <div className="text-yellow-800">Date:</div>
+            <div className="font-medium text-yellow-900">Saturday, April 26, 2025</div>
+            
+            <div className="text-yellow-800">Time:</div>
+            <div className="font-medium text-yellow-900">2:00 PM</div>
+            
+            <div className="text-yellow-800">Location:</div>
+            <div className="font-medium text-yellow-900">Patrick Space Force Base, FL 32925</div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-lg font-medium mb-2">Location</h4>
+            <p className="text-text-secondary mb-2">Patrick Space Force Base, FL 32925</p>
+            <a 
+              href="https://maps.app.goo.gl/Pxsf9AWEoANBALWL8" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline flex items-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              View on Google Maps
+            </a>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-medium mb-2">Hours of Operation</h4>
+            <p className="text-text-secondary">Monday - Friday: 7:30 a.m. to 3 p.m.</p>
+            <p className="text-text-secondary">Saturday & Sunday: Closed</p>
+            
+            <div className="mt-4">
+              <a 
+                href="https://www.patrick.spaceforce.mil/Visitors-Control-Center/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+                Visit VCC Website
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       

@@ -40,9 +40,6 @@ namespace SpaceForce.VisitorManagement.Data.Migrations
                     b.Property<int>("PassType")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("PassTypeId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 

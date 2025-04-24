@@ -54,27 +54,6 @@ export default function Index() {
             </div>
           </section>
           
-          <section className="bg-panel p-6 rounded-lg mb-10 border border-divider">
-            <h2 className="text-2xl font-semibold mb-4 text-primary-dark">Available Services</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-4 rounded-md bg-surface border border-divider">
-                <div className="text-3xl mb-2">⛳</div>
-                <div>Golf Pass</div>
-              </div>
-              <div className="text-center p-4 rounded-md bg-surface border border-divider">
-                <div className="text-3xl mb-2">🏙️</div>
-                <div>Visitor Pass</div>
-              </div>
-              <div className="text-center p-4 rounded-md bg-surface border border-divider">
-                <div className="text-3xl mb-2">🏥</div>
-                <div>VHIC</div>
-              </div>
-              <div className="text-center p-4 rounded-md bg-surface border border-divider">
-                <div className="text-3xl mb-2">🪪</div>
-                <div>DBIDS Card</div>
-              </div>
-            </div>
-          </section>
         </main>
 
         <footer className="pt-10 border-t border-divider">
