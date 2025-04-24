@@ -64,7 +64,8 @@ public class AppointmentsController : ControllerBase
             appt = new SfAppointment()
             {
                 UserId = userId,
-                Date = date
+                Date = date,
+                Status = SfStatus.Scheduled
             };
             await _dbContext.AddAsync(appt);
             await _dbContext.SaveChangesAsync();
