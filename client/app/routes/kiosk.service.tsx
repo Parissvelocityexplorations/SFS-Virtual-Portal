@@ -27,14 +27,12 @@ export default function InformationForm() {
   });
 
   const validateField = (name: string, value: string) => {
-    if (name === 'firstName' || name === 'lastName') {
+    if (name === 'firstName' || name === 'lastName' || name === 'email' || name === 'phone') {
       return value.trim().length > 0;
     } else if (name === 'email') {
-      if (!value) return true; // Optional
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(value);
     } else if (name === 'phone') {
-      if (!value) return true; // Optional
       const phonePattern = /^\d{10}$|^\d{3}[-.]?\d{3}[-.]?\d{4}$/;
       return phonePattern.test(value.replace(/\s/g, ''));
     }
@@ -54,8 +52,8 @@ export default function InformationForm() {
     const newErrors = {
       firstName: !formData.firstName.trim(),
       lastName: !formData.lastName.trim(),
-      phone: formData.phone ? !validateField('phone', formData.phone) : false,
-      email: formData.email ? !validateField('email', formData.email) : false
+      phone: !formData.phone.trim() || !validateField('phone', formData.phone),
+      email: !formData.email.trim() || !validateField('email', formData.email)
     };
     
     setFormErrors(newErrors);
@@ -132,7 +130,7 @@ export default function InformationForm() {
             
             <div className="md:col-span-1">
               <label className="block text-text-primary font-medium mb-2" htmlFor="phone">
-                Phone Number
+                Phone Number <span className="text-red-500">*</span>
               </label>
               <input
                 id="phone"
@@ -144,15 +142,16 @@ export default function InformationForm() {
                 className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all ${
                   formErrors.phone ? 'border-red-500 bg-red-50' : 'border-divider'
                 }`}
+                required
               />
               {formErrors.phone && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid phone number</p>
+                <p className="mt-1 text-sm text-red-500">Phone number is required</p>
               )}
             </div>
             
             <div className="md:col-span-1">
               <label className="block text-text-primary font-medium mb-2" htmlFor="email">
-                Email Address
+                Email Address <span className="text-red-500">*</span>
               </label>
               <input
                 id="email"
@@ -164,9 +163,10 @@ export default function InformationForm() {
                 className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all ${
                   formErrors.email ? 'border-red-500 bg-red-50' : 'border-divider'
                 }`}
+                required
               />
               {formErrors.email && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid email</p>
+                <p className="mt-1 text-sm text-red-500">Email address is required</p>
               )}
             </div>
             
