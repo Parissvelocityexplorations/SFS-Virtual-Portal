@@ -40,13 +40,27 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 return BadRequest(e);
             }
         }
-        [HttpGet()]
+        [HttpGet("/allUsers")]
         public async Task<IActionResult> GetUsers()
         {
             try
             {
                 List<SfUser> users = await _dbContext.Users.ToListAsync();
                 return Ok(users);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+        }
+        [HttpGet("userId/${userId}")]
+        public async Task<IActionResult> GetUser(Guid userId)
+        {
+            try
+            {
+                SfUser user = await _dbContext.Users.Where(x => x.Id == userId).SingleOrDefaultAsync();
+                return Ok(user);
             }
             catch (Exception e)
             {

@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
+using SpaceForce.VisitorManagement.Data.DTOs;
 using SpaceForce.VisitorManagement.Data.Models;
 using SpaceForce.VisitorManagement.Data.Models.Enumerations;
-
-namespace SpaceForce.VisitorManagement.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -50,7 +49,7 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPost("userid/{userId}/date/{date}")]
-    public async Task<IActionResult> AddAsync(Guid userId, DateTime date)
+    public async Task<IActionResult> AddAsync(Guid userId, DateTime date, SfUserDto user)
     {
         try
         {
@@ -67,8 +66,12 @@ public class AppointmentsController : ControllerBase
                 Date = date,
                 Status = SfStatus.Scheduled
             };
+
             await _dbContext.AddAsync(appt);
             await _dbContext.SaveChangesAsync();
+
+            SpaceForce.VisitorManagement.Api.Controllers.EmailController.SendConfirmation(user.FirstName, user.LastName, user.Email, appt.Date);
+            
             return Ok(appt);
         }
         catch (Exception e)
