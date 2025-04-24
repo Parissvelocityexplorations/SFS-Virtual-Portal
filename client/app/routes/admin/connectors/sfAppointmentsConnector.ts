@@ -18,12 +18,19 @@ export class SfAppointmentsConnector {
     //"userid/{userId}/date/{date}"
   };
   //[HttpGet("filter/startDate/{startDate}/endDate/{endDate}")]
-  public getByDateRangsAndStatusAsync = async (startDate: string, endDate: string, statuses: string[]): Promise<[boolean, ISfAppointment[]]> => {//{params:statuses.map(status=> {statuses:status})
+  public getByDateRangeAndStatusAsync = async (startDate: string, endDate: string, statuses: string[]): Promise<[boolean, ISfAppointment[]]> => {
+    console.log("statuses",statuses);
+    const params:URLSearchParams = new URLSearchParams();
+
+    for(const status of statuses){
+      params.append("statuses",status);
+    }
+
     const config: AxiosRequestConfig<any> = {
-      params: statuses.map(x => {
-        status:x;
-      })
+      params: params
     };
+
+    console.log(config);
     const resp: AxiosResponse<ISfAppointment[]> = await axios.get(`${this.baseUrl}/filter/startDate/${startDate}/endDate/${endDate}`, config);
     if (this.isResponseValid(resp)) {
       return [true, resp.data];
@@ -31,8 +38,8 @@ export class SfAppointmentsConnector {
     return [false, []];
   };
 
-  public updateStatusAsync = async (appointmentId: string, status: SfStatus): Promise<boolean> => {
-    const resp: AxiosResponse<any> = await axios.post(`${this.baseUrl}/${appointmentId}/status/${status}`);
+  public updateStatusAsync = async (appointmentId: string, status: string): Promise<boolean> => {
+    const resp: AxiosResponse<any> = await axios.post(`${this.baseUrl}/${appointmentId}/statuses/${status}`);
     return this.isResponseValid(resp);
   };
 }
