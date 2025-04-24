@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 
 using MailKit.Net.Smtp;
-using MailKit;
 using MimeKit;
-using SpaceForce.VisitorManagement.Data.Models;
-using Org.BouncyCastle.Bcpg.Attr;
 namespace SpaceForce.VisitorManagement.Api.Controllers
 {
     [ApiController]
@@ -13,7 +9,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
     public class EmailController : Controller
     {
         [HttpGet("SendConfirmation")]
-        public IActionResult SendConfirmation(string firstName, string lastName, string userEmail, DateTime time)
+        public static void SendConfirmation(string firstName, string lastName, string userEmail, DateTime time)
         {
             var email = new MimeMessage();
 
@@ -37,10 +33,10 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
-            return Ok();
+            return;
         }
         [HttpGet("SendNotification")]
-        public IActionResult SendNotification(string message, string userEmail)
+        public static void SendNotification(string message, string userEmail)
         {
             var email = new MimeMessage();
 
@@ -62,7 +58,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
-            return Ok();
+            return;
         }
     }
 }
