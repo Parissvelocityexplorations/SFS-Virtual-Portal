@@ -65,7 +65,7 @@ export default function Confirmation() {
             const date = JSON.parse(storedAppointment).formattedDate || 'Scheduled Date';
             const time = JSON.parse(storedAppointment).time || 'Scheduled Time';
             
-            const emailBody = `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Building 237, Pass Office%0A- Confirmation ID: ${confirmId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
+            const emailBody = `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Patrick Space Force Base, FL 32925%0A- Confirmation ID: ${confirmId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
             
             // In a production app, this would send the confirmation data to the backend
             // For demo purposes, we'll just log what would be sent

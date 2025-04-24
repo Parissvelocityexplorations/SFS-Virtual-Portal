@@ -201,7 +201,7 @@ export default function Review() {
               <p>Date:</p>
               <p className="font-medium">{appointmentDetails?.formattedDate}</p>
               <p className="mt-2">Location:</p>
-              <p className="font-medium">Building 237, Pass Office</p>
+              <p className="font-medium">Patrick Space Force Base, FL 32925</p>
             </div>
           </div>
         </div>
