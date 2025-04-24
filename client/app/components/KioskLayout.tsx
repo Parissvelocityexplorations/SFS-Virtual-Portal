@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressSteps from './ProgressSteps';
+import ProgressSteps from './ProgressSteps/ProgressSteps';
 import { useNavigate } from '@remix-run/react';
 
 type KioskLayoutProps = {

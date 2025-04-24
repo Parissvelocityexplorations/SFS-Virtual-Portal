@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import "./ProgressSteps.scss";
 
 type ProgressStepsProps = {
   steps: string[];
