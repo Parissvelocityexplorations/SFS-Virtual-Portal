@@ -20,7 +20,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
             email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
                 Text = "<h2>Thank you for using SFS Scheduler!  Here are your appointment details:</h2>\n" +
-                $"<p>Visitor Name: <b>{firstName} {lastName}</b></p>\n" +
+                // $"<p>Visitor Name: <b>{firstName} {lastName}</b></p>\n" +
                 $"<p>Appointment Time: <b>{time.ToString("dddd, dd MMMM yyyy")}</b></p>\n"
             };
             using (var smtp = new SmtpClient())

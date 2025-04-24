@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 type CalendarProps = {
   onSelectDate: (date: Date) => void;
   onSelectTimeSlot: (time: string) => void;
   selectedDate: Date | null;
   selectedTime: string | null;
+};
+
+function getUnavailableSlots() {
+  const apts = axios.get(`http://localhost:5288/Appointments`);
+  console.log(apts);
+  return ["9:30 AM", "11:00 AM", "2:30 PM"];
 };
 
 export default function Calendar({ 
@@ -45,11 +52,63 @@ export default function Calendar({
   const today = new Date();
   
   // Time slots
-  const morningSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"];
-  const afternoonSlots = ["1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM"];
+  const morningSlots = [
+    "7:00 AM",
+    "7:10 AM",
+    "7:20 AM",
+    "7:30 AM",
+    "7:40 AM",
+    "7:50 AM",
+    "8:00 AM",
+    "8:10 AM",
+    "8:20 AM",
+    "8:30 AM",
+    "8:40 AM",
+    "8:50 AM",
+    "9:00 AM",
+    "9:10 AM",
+    "9:10 AM",
+    "9:20 AM",
+    "9:30 AM",
+    "9:40 AM",
+    "9:50 AM",
+    "10:00 AM",
+    "10:10 AM",
+    "10:20 AM",
+    "10:30 AM",
+    "10:40 AM",
+    "10:50 AM",
+    "11:00 AM",
+    "11:10 AM",
+    "11:20 AM",
+    "11:30 AM",
+    "11:40 AM",
+    "11:50 AM",
+  ];
+  const afternoonSlots = [
+    "12:00 PM",
+    "12:10 PM",
+    "12:20 PM",
+    "12:30 PM",
+    "12:40 PM",
+    "12:50 PM",
+    "1:00 PM",
+    "1:10 PM",
+    "1:20 PM",
+    "1:30 PM",
+    "1:40 PM",
+    "1:50 PM",
+    "2:00 PM",
+    "2:10 PM",
+    "2:10 PM",
+    "2:20 PM",
+    "2:30 PM",
+    "2:40 PM",
+    "2:50 PM",
+  ];
   
   // Mock unavailable slots for demo purposes (in a real app this would come from backend)
-  const unavailableSlots = ["9:30 AM", "11:00 AM", "2:30 PM"];
+  const unavailableSlots = getUnavailableSlots();
   
   // Navigate to previous month
   const prevMonth = () => {

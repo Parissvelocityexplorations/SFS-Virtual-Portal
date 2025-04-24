@@ -54,6 +54,8 @@ export default function Confirmation() {
         setUserData(JSON.parse(storedUserInfo));
         setSelectedService(storedService);
         setAppointmentDetails(JSON.parse(storedAppointment));
+
+        axios.post(`http://localhost:5288/Appointments/userid/0196680f-3f74-7037-aca5-2743f022f73f/date/0001-01-01T00%3A00%3A00/userEmail/${userData.email}/fullName/${userData.firstName + " " + userData.lastName}`);
       } catch (e) {
         console.error('Error parsing stored data:', e);
       }
@@ -83,24 +85,9 @@ export default function Confirmation() {
     
     navigate('/kiosk');
   };
-
-  const handleEmail = () => {
-    const test = axios.get('http://localhost:5288/allUsers');
-    console.log('test: ', test);
-  }
   
   const handlePrint = () => {
     window.print();
-  };
-  
-  // Format email body with details
-  const getEmailBody = () => {
-    const serviceName = selectedService ? getServiceName(selectedService) : 'Selected Service';
-    const name = userData ? `${userData.firstName} ${userData.lastName}` : 'Guest';
-    const date = appointmentDetails?.formattedDate || 'Scheduled Date';
-    const time = appointmentDetails?.time || 'Scheduled Time';
-    
-    return `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Building 237, Pass Office%0A- Confirmation ID: ${confirmationId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
   };
 
   if (loading) {
@@ -226,7 +213,7 @@ export default function Confirmation() {
             Print Confirmation
           </button>
           
-          <button
+          {/* <button
             onClick={handleEmail}
             className="px-6 py-4 rounded-lg border-2 border-divider hover:border-primary flex items-center justify-center font-medium transition-all"
           >
@@ -234,7 +221,7 @@ export default function Confirmation() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
             Email Confirmation
-          </button>
+          </button> */}
           
           <button
             onClick={handleNewAppointment}
