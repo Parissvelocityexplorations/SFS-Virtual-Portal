@@ -6,14 +6,14 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmailController : Controller
+    public class EmailController : ControllerBase
     {
         [HttpGet("SendConfirmation")]
         public static void SendConfirmation(string firstName, string lastName, string userEmail, DateTime time)
         {
             var email = new MimeMessage();
 
-            email.From.Add(new MailboxAddress("SFS Scheduling", "ginnyglink@gmail.com"));
+            email.From.Add(new MailboxAddress("SFS Scheduling", "sfs.visitor.scheduling@gmail.com"));
             email.To.Add(new MailboxAddress(firstName + lastName, userEmail));
 
             email.Subject = "SFS Appointment Confirmation";
@@ -28,7 +28,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 smtp.Connect("smtp.gmail.com", 587, false);
 
                 // Note: only needed if the SMTP server requires authentication
-                smtp.Authenticate("ginnyglink@gmail.com", "rpsy oxnf tdsk pdau");
+                smtp.Authenticate("sfs.visitor.scheduling@gmail.com", "mixe tilx wnpp klzm");
 
                 smtp.Send(email);
                 smtp.Disconnect(true);
@@ -40,7 +40,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
         {
             var email = new MimeMessage();
 
-            email.From.Add(new MailboxAddress("SFS Scheduling", "ginnyglink@gmail.com"));
+            email.From.Add(new MailboxAddress("SFS Scheduling", "sfs.visitor.scheduling@gmail.com"));
             email.To.Add(new MailboxAddress(userEmail, userEmail));
 
             email.Subject = "SFS Appointment Notification";
@@ -53,7 +53,7 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 smtp.Connect("smtp.gmail.com", 587, false);
 
                 // Note: only needed if the SMTP server requires authentication
-                smtp.Authenticate("ginnyglink@gmail.com", "rpsy oxnf tdsk pdau");
+                smtp.Authenticate("sfs.visitor.scheduling@gmail.com", "mixe tilx wnpp klzm");
 
                 smtp.Send(email);
                 smtp.Disconnect(true);
