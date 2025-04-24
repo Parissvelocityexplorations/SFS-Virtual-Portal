@@ -2,24 +2,95 @@ import { useEffect, useMemo, useState } from "react";
 import { ISfAppointment } from "~/routes/admin/models/iSfAppointment";
 import { SfStatus } from "~/routes/admin/models/enums/sfStatus";
 import { SfAppointmentsConnector } from "~/routes/admin/connectors/sfAppointmentsConnector";
-import { useNavigate } from "@remix-run/react";
-
+import { SfPassType } from "~/routes/admin/models/enums/sfPassType";
+import "./admin/admin.scss";
 export default function Admin() {
-  const navigate = useNavigate();
   const [allItems, setAllItems] = useState<ISfAppointment[]>([]);
   const connector: SfAppointmentsConnector = new SfAppointmentsConnector();
+  const getStatusLabel = (value: SfStatus): string => {
+    switch (value) {
+      case SfStatus.Scheduled:
+        return "Scheduled";
+      case SfStatus.CheckedIn:
+        return "Checked-In";
+      case SfStatus.Serving:
+        return "Serving";
+      case SfStatus.Served:
+        return "Served";
+      case SfStatus.Cancelled:
+        return "Cancelled";
+      default:
+        return "No Status";
+    }
+  };
 
-  const checkedInItems = useMemo(() => {
+  const getPassTypeLabel = (value: SfPassType): { label: string, icon: string } => {
+    switch (value) {
+      case SfPassType.GolfPass:
+        return { label: "Golf Pass", icon: "⛳" };
+      case SfPassType.VisitorPass:
+        return { label: "Visitor Pass", icon: "🏙️" };
+      case SfPassType.VetCard:
+        return { label: "VEHIC", icon: "🏥" };
+      case SfPassType.Contractor:
+        return { label: "Contractor", icon: "🪪" };
+      default:
+        return { label: "Not Set", icon: "❓" };
+    }
+  };
+
+  const allItemNodes = useMemo(() => {
+    return allItems.map((item: ISfAppointment) => {
+      return <li key={item.id}>
+        <div>
+          <i>{getPassTypeLabel(item.passType).icon} </i>
+          <span>{getPassTypeLabel(item.passType).label}</span>
+        </div>
+        <div>
+          {item.user.firstName} {item.user.lastName}
+          <div>{getStatusLabel(item.status)}</div>
+        </div>
+        <div>
+          <button>Serve</button>
+        </div>
+      </li>;
+      // <li className={"sf-admin-item"} key={item.id}>
+      //   <div>
+      //     {item.user.firstName} {item.user.lastName}
+      //     <div className={"status"}>{getStatusLabel(item.status)}</div>
+      //   </div>
+      // </li>;
+    });
+  }, [allItems]);
+
+  const checkedInItemNodes = useMemo(() => {
     console.log("checkedInItems...");
     return allItems.filter(x => x.status == SfStatus.CheckedIn);
   }, [allItems]);
 
-  const servingItems = useMemo(() => {
+  const servingItemNodes = useMemo(() => {
     console.log("servingItems...");
     return allItems.filter(x => x.status == SfStatus.Serving);
   }, [allItems]);
-  const scheduledItems = useMemo(() => {
+
+  const scheduledItemNodes = useMemo(() => {
     console.log("scheduledItems...");
+    allItems.map((item: ISfAppointment) => {
+      return <li key={item.id}>
+        <div>
+          <img src={getPassTypeLabel(item.passType).icon} />
+          <span>{getPassTypeLabel(item.passType).label}</span>
+        </div>
+        <div>
+          {item.user.firstName} {item.user.lastName}
+          <div>{getStatusLabel(item.status)}</div>
+        </div>
+        <div>
+          <button>Serve</button>
+        </div>
+      </li>;
+    });
+
     return allItems.filter(x => x.status == SfStatus.Scheduled);
   }, [allItems]);
 
@@ -48,6 +119,10 @@ export default function Admin() {
     //const [resultStatus,resultContent] = await connector.updateStatusAsync(item.id,SfStatus[SfStatus.Serving]);
   };
 
+  const moveToServed = async (item: ISfAppointment): Promise<void> => {
+    //
+  };
+
   //On Component mount
   useEffect(() => {
     console.log("admin.tsx");
@@ -55,29 +130,29 @@ export default function Admin() {
       await getItemsAsync();
     })();
   }, []);
+  useEffect(() => {
+    console.log("allItemsChanged...", allItems);
+  }, [allItems]);
   return (
-    <div className={"sf-admin"}>
-      <div>All ITems</div>
-      {allItems.map((item) => {
-        <div key={item.id}>{item}</div>;
-      })}
+    <ul className={"sf-admin"}>
+      {allItemNodes}
       <div>Now Serving</div>
-      {servingItems.map((item) => {
-         <div key={item.id}>{item}</div>;
-      })}
-      <div>Checked-In</div>
-      {checkedInItems.map(item => {
-         <div key={item.id}>{item}</div>;
-      })}
-      <div>Scheduled</div>
-      {scheduledItems.map(item => {
-         <div key={item.id}>{item}</div>;
-      })}
+      {/*{servingItems.map((item) => {*/}
+      {/*   <div key={item.id}>{item}</div>;*/}
+      {/*})}*/}
+      {/*<div>Checked-In</div>*/}
+      {/*{checkedInItems.map(item => {*/}
+      {/*   <div key={item.id}>{item}</div>;*/}
+      {/*})}*/}
+      {/*<div>Scheduled</div>*/}
+      {/*{scheduledItems.map(item => {*/}
+      {/*   <div key={item.id}>{item}</div>;*/}
+      {/*})}*/}
       {/*Now Serving*/}
       {/*{items.map((item) => (*/}
       {/*  <li key={item.id}>{item.name}</li>*/}
       {/*))}*/}
-      {/*Checked in*/}
-      {/*Scheduled*/}
-    </div>);
+      Checked in
+      Scheduled
+    </ul>);
 }

@@ -1,0 +1,20 @@
+.sf-admin{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  &-item{
+    .status{
+      padding: 8px 12px;
+      background: #1976D2;
+      color: white;
+      width: fit-content;
+      border-radius: 99px;
+    }
+    i{
+      height: 48px;
+      width: 48px;
+    }
+  }
+}
+ul,li {
+  list-style-type: none;
+}

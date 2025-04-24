@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using DotEnv.Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,9 @@ builder.Services.AddControllers().AddJsonOptions(o =>
 {
     o.JsonSerializerOptions
         .PropertyNameCaseInsensitive = true;
+    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    o.JsonSerializerOptions.WriteIndented = true;
+
 });
 
 builder.Services.AddControllers();
