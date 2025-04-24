@@ -1,171 +1,198 @@
-# Space Force Virtual Portal
+<p align="center">
+  <img src="https://cdn-icons-png.flaticon.com/512/8926/8926796.png" width="100" />
+</p>
+<p align="center">
+    <h1 align="center">SFS VIRTUAL PORTAL</h1>
+</p>
+<p align="center">
+    <em>Streamlining Visitor Management at Space Force Bases</em>
+</p>
+<p align="center">
+	<img src="https://img.shields.io/badge/license-MIT-blue?style=flat&color=0080ff" alt="license">
+	<img src="https://img.shields.io/github/last-commit/parissyoungblood/sfs-virtual-portal?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/badge/.NET-8.0-blue?style=flat&color=0080ff" alt="dotnet">
+	<img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=flat&logo=PostgreSQL&logoColor=white" alt="PostgreSQL">
+<p>
+<p align="center">
+		<em>Powered by the tools and frameworks below.</em>
+</p>
+<p align="center">
+	<img src="https://img.shields.io/badge/.NET-512BD4.svg?style=flat&logo=dotnet&logoColor=white" alt=".NET">
+	<img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat&logo=React&logoColor=black" alt="React">
+	<img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=flat&logo=PostgreSQL&logoColor=white" alt="PostgreSQL">
+    <br>
+	<img src="https://img.shields.io/badge/Swagger-85EA2D.svg?style=flat&logo=Swagger&logoColor=black" alt="Swagger">
+	<img src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=flat&logo=Tailwind-CSS&logoColor=white" alt="Tailwind CSS">
+	<img src="https://img.shields.io/badge/Serilog-9C27B0.svg?style=flat&logo=Serilog&logoColor=white" alt="Serilog">
+</p>
 
-![Space Force Logo](client/public/logo-dark.png)
+---
 
-## Overview
-The Space Force Virtual Portal is a visitor management system designed for secure military facilities. It streamlines visitor check-in, appointment scheduling, and pass management through an intuitive digital kiosk interface. The system enables visitors to self-register and schedule appointments while providing base personnel with administrative oversight.
+## 🚀 Quick Links
 
-## Core Functionality
+> - [Overview](#-overview)
+> - [Features](#-features)
+> - [Project Structure](#-project-structure)
+> - [Technology Stack](#-technology-stack)
+> - [Getting Started](#-getting-started)
+>   - [Prerequisites](#prerequisites)
+>   - [Installation](#installation)
+> - [API Documentation](#-api-documentation)
+> - [Contributing](#-contributing)
+> - [License](#-license)
 
-### Visitor Management
-- **Self-service kiosk** for visitor check-in
-- **ID scanning** via barcode/QR code
-- **Appointment scheduling** with calendar integration
-- **Pass generation** for different access types (Golf Pass, Visitor Pass, Vet Card, Contractor)
-- **Status tracking** (Scheduled, Checked In, Serving, Served, Cancelled)
+---
 
-### Administrative Features
-- **User management** for personnel and visitors
-- **Appointment oversight** and status updates
-- **Multi-step workflow** for visitor processing
+## 🔍 Overview
 
-## Architecture
+The SFS Virtual Portal is a digital visitor kiosk system tailored for Space Force Base operations. It modernizes the visitor experience by integrating secure pass management, appointment scheduling, and biometric check-ins—all through an accessible web interface.
 
-### Backend Technologies
-- **.NET 7**: Cross-platform framework for building web applications
-- **ASP.NET Core Web API**: RESTful API development framework
-- **Entity Framework Core**: ORM for database operations with migrations
-- **PostgreSQL**: Relational database management system
-- **JWT Authentication**: Token-based security for API access
-- **Serilog**: Structured logging provider
+---
 
-### Frontend Technologies
-- **Remix.js**: React-based web framework with server-side rendering
-- **React**: Component-based UI library for interactive interfaces
-- **TypeScript**: Typed JavaScript for enhanced developer experience
-- **Tailwind CSS**: Utility-first CSS framework for styling
-- **ZXing**: Barcode scanning library integration
-- **React Router**: Client-side routing within the application
+## ✨ Features
 
-### DevOps & Infrastructure
-- **Docker**: Containerization for consistent deployment
-- **Docker Compose**: Multi-container orchestration for local development
+- **Digital Pass Management**: Create, manage, and scan visitor passes
+- **Visitor Registration**: Real-time tracking of individuals entering the base
+- **Appointment Scheduling**: Admin and visitor portals for efficient scheduling
+- **DBIDS Integration**: Secure validation of visitor credentials
+- **QR Check-In System**: Seamless access with scannable codes
+- **Role-Based Access**: Admin, staff, and visitor user roles
 
-## Project Structure
+---
 
-### Backend (`SpaceForce.VisitorManagement`)
-- **SpaceForce.VisitorManagement.Api**
-  - **Controllers**
-    - `AppointmentsController.cs`: Manages appointments (create, get by user, update status)
-    - `UserController.cs`: User management operations (create, get all, update)
-    - `WeatherForecastController.cs`: Test/sample controller
-  - **Program.cs**: Application configuration and service setup
-  - **appsettings.json**: Environment configuration including database and JWT settings
-  
-- **SpaceForce.VisitorManagement.Data**
-  - **DbContexts**
-    - `SfDbContext.cs`: Entity Framework database context with entity configurations
-  - **Models**
-    - **Enumerations**
-      - `SfPassType.cs`: Pass type enum (GolfPass, VisitorPass, VetCard, Contractor)
-      - `SfStatus.cs`: Status tracking enum (Scheduled, CheckedIn, Serving, Served, Cancelled)
-    - `SfAppointment.cs`: Appointment entity with user, pass type and status
-    - `SfUser.cs`: User entity with personal information
-    - `SfEntityBase.cs`: Base entity with ID and timestamps
-    - `SfPivotBase.cs`: Base class with timestamp properties
-  - **Migrations**: Database schema evolution
-  - **Seeds**: Initial database data population
+## 📁 Project Structure
 
-### Frontend (`client`)
-- **Components**
-  - `Barcode.tsx`: Appointment barcode generator for check-in
-  - `Calendar.tsx`: Date and timeslot selection component
-  - `KioskLayout.tsx`: Layout template with header, footer and progress indicator
-  - `ProgressSteps.tsx`: Step visualization for multi-step processes
-  - `ServiceCard.tsx`: Selectable card component for service options
-- **Routes**
-  - `kiosk._index.tsx`: Initial kiosk screen with DBIDS information
-  - `kiosk.service.tsx`: User information collection and service selection
-  - `kiosk.schedule.tsx`: Appointment date and time scheduling
-  - `kiosk.review.tsx`: Appointment information review
-  - `kiosk.confirmation.tsx`: Booking confirmation with barcode
-  - `kiosk.scanner.tsx`: ID scanner interface
-  - `signin.tsx`: Staff authentication screen
-- **Styles**
-  - `theme.css`: Custom theme variables and color palette
-  - `tailwind.css`: Tailwind utility customization
+```
+sfs-virtual-portal/
+├── client/                   # Frontend React application
+└── SpaceForce.VisitorManagement/  # .NET backend project
+    ├── Controllers/          # API endpoints
+    ├── Models/               # Entity models
+    ├── Services/             # Business logic
+    ├── Data/                 # DB context and migrations
+    └── Configuration/        # App settings and policies
+```
 
-## Database Schema
-- **Users Table**: Stores visitor information
-  - `Id` (GUID)
-  - `FirstName`, `LastName`
-  - `Email`, `PhoneNo`
-  - Timestamps (`DateCreated`, `DateModified`)
-  
-- **Appointments Table**: Manages visit scheduling
-  - `Id` (GUID)
-  - `UserId` (Foreign key to Users)
-  - `PassTypeId`
-  - `Date` (Appointment datetime)
-  - `PassType` (Enum)
-  - `Status` (Enum)
-  - Timestamps (`DateCreated`, `DateModified`)
+---
 
-## Getting Started
+## 🔧 Technology Stack
+
+### Backend (Server)
+
+- **Framework**: .NET 8.0
+- **Database**: PostgreSQL
+- **ORM**: Entity Framework Core
+- **Authentication**: JWT Bearer
+- **API Docs**: Swagger / OpenAPI
+- **Logging**: Serilog
+
+### Frontend (Client)
+
+- **Framework**: React 18
+- **Styling**: Tailwind CSS
+- **Routing**: React Router
+- **State**: Zustand
+- **Build Tool**: Vite
+
+---
+
+## 🛠 Getting Started
 
 ### Prerequisites
-- Docker and Docker Compose
-- .NET 7.0+ SDK (for local development)
-- Node.js 18+ and npm (for frontend development)
-- PostgreSQL (for local database)
 
-### Running with Docker
-```bash
-docker-compose up
-```
+- Node.js v18+
+- .NET 8 SDK
+- PostgreSQL
+- EF Core CLI
+- Docker & Docker Compose (optional for containerized setup)
 
-This will start both the frontend and backend services, along with a PostgreSQL instance. The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+---
 
-### Local Development
+### 🔧 Traditional Setup
 
-#### Backend
-```bash
+#### Backend Setup
+
+```sh
 cd SpaceForce.VisitorManagement
 dotnet restore
-dotnet build
-dotnet run --project SpaceForce.VisitorManagement.Api
+dotnet run
 ```
 
-#### Frontend
-```bash
+#### Database Setup
+
+1. Ensure PostgreSQL is running
+2. Update your `appsettings.json` with the correct connection string
+3. Run database migrations:
+
+```sh
+dotnet ef database update
+```
+
+#### Frontend Setup
+
+```sh
 cd client
 npm install
 npm run dev
 ```
 
-## Application Flow
+---
 
-### Visitor Experience
-1. Visitor approaches kiosk and selects if they have a DBIDS card
-2. Enters personal information and selects required pass type
-3. Chooses appointment date and time from available slots
-4. Reviews appointment details for accuracy
-5. Receives confirmation with digital pass/barcode
+### 🐳 Dockerized Setup
 
-## API Endpoints
+1. Clone the repository:
 
-### Users
-- `GET /api/user`: Retrieve all users
-- `POST /api/user`: Create new user
-- `PUT /api/user/userId/{userId}`: Update user information
+```sh
+git clone https://github.com/parissyoungblood/sfs-virtual-portal.git
+cd sfs-virtual-portal
+```
 
-### Appointments
-- `GET /api/appointments/userId/{userId}`: Get appointments for a specific user
-- `POST /api/appointments/userid/{userId}/date/{date}`: Create new appointment
-- `PUT /api/appointments/{appointmentId}/status/{status}`: Update appointment status
+2. Configure your environment variables:
 
-## Current Limitations & Future Enhancements
-- Frontend currently uses mock data without API integration
-- Authentication/authorization system needs implementation for staff portal
-- Admin dashboard for appointment management to be developed
-- Reporting and analytics features planned
-- Mobile responsiveness improvements needed
+- Copy `.env.example` to `.env` and update values
+- Ensure DB connection info matches Docker services
 
-## License
-Proprietary software for Space Force use only.
+3. Build and run the containers:
+
+```sh
+docker-compose up --build
+```
+
+4. Access the app:
+- Frontend: [http://localhost:3001](http://localhost:3001)
+- Swagger API: [http://localhost:5288/swagger](http://localhost:5288/swagger)
 
 ---
 
-*Space Force Virtual Portal - Streamlining secure facility access management*
+## 📚 API Documentation
+
+The Swagger documentation for the API is accessible at:
+
+- Local: `http://localhost:5288/swagger`
+- Dev: `https://dev-api.example.com/swagger`
+
+Includes:
+- Authentication & JWT validation
+- Visitor and appointment CRUD
+- DBIDS validation endpoints
+- Error codes and logging schemas
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To get started:
+
+1. Fork this repo
+2. Create a branch (`git checkout -b feature/my-feature`)
+3. Commit changes (`git commit -m 'Add cool feature'`)
+4. Push to GitHub (`git push origin feature/my-feature`)
+5. Open a Pull Request 🚀
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+[**Return to Top**](#-quick-links)

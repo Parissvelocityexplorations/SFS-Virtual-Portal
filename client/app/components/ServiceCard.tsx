@@ -37,14 +37,7 @@ export default function ServiceCard({
         }
       }}
     >
-      {/* Decorative corner effect */}
-      {selected && (
-        <div className="absolute top-0 right-0 h-16 w-16 overflow-hidden">
-          <div className="absolute -top-3 -right-3 transform rotate-45 bg-primary text-white font-medium py-1 px-10 shadow-md">
-            Selected
-          </div>
-        </div>
-      )}
+      {/* Removed decorative corner banner for cleaner design */}
       
       <div className="flex flex-col md:flex-row md:items-center mb-4">
         <div className={`
