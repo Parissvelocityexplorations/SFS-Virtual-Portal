@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpaceForce.VisitorManagement.Data.DbContexts;
-using SpaceForce.VisitorManagement.Data.DTOs;
 using SpaceForce.VisitorManagement.Data.Models;
 using SpaceForce.VisitorManagement.Data.Models.Enumerations;
+
+namespace SpaceForce.VisitorManagement.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -17,21 +18,13 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet("filter/startDate/{startDate}/endDate/{endDate}")]
-    public async Task<IActionResult> GetByFilterAsync(DateTime startDate, DateTime? endDate, [FromQuery]List<SfStatus> statuses)
+    public async Task<IActionResult> GetByFilterAsync(DateTime startDate, DateTime? endDate, [FromQuery] List<SfStatus> statuses)
     {
-        List<SfAppointment> appts = await _dbContext.Appointments
+        List<SfAppointment> appts = await _dbContext.Appointments.Include(x=>x.User)
             .Where(x => x.Date >= startDate && x.Date <= endDate)
             .Where(y => statuses.Contains(y.Status))
             .ToListAsync();
         return Ok(appts);
-        
-        /*
-         * var names = new[] { "Blog1", "Blog2" };
-
-           var blogs = await context.Blogs
-               .Where(b => names.Contains(b.Name))
-               .ToArrayAsync();
-         */
     }
 
     [HttpGet("userId/${userId}")]
@@ -49,17 +42,29 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPost("userid/{userId}/date/{date}")]
-    public async Task<IActionResult> AddAsync(Guid userId, DateTime date, SfUserDto user)
+    public async Task<IActionResult> AddAsync(Guid userId, DateTime date)
     {
         try
         {
+            //Ensure date is valid
+            if(date<= DateTime.UtcNow)
+            {
+                return BadRequest("This date is in the past.  Please select a date and time in the future.");
+            }
+            //Ensure the user exists
+            SfUser? user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+            {
+                return BadRequest($"User with id {userId} not found.");
+            }
+            
             //Determine if user has any open appointments
             SfAppointment? appt = await _dbContext.Appointments.FirstOrDefaultAsync(x => x.UserId == userId && x.Status > SfStatus.Served);
             if (appt != null)
             {
                 return BadRequest("An existing appointment exists.  Only one open appointment is allowed at any given time.");
             }
-
+            
             appt = new SfAppointment()
             {
                 UserId = userId,
@@ -70,8 +75,8 @@ public class AppointmentsController : ControllerBase
             await _dbContext.AddAsync(appt);
             await _dbContext.SaveChangesAsync();
 
-            SpaceForce.VisitorManagement.Api.Controllers.EmailController.SendConfirmation(user.FirstName, user.LastName, user.Email, appt.Date);
-            
+            EmailController.SendConfirmation(user.FirstName, user.LastName, user.Email, appt.Date);
+
             return Ok(appt);
         }
         catch (Exception e)
