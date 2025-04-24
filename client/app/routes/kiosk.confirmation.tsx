@@ -3,6 +3,7 @@ import { useNavigate } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import KioskLayout from '~/components/KioskLayout';
 import Barcode from '~/components/Barcode';
+import axios from "axios";
 
 export const meta: MetaFunction = () => {
   return [
@@ -82,6 +83,11 @@ export default function Confirmation() {
     
     navigate('/kiosk');
   };
+
+  const handleEmail = () => {
+    const test = axios.get('http://localhost:5288/allUsers');
+    console.log('test: ', test);
+  }
   
   const handlePrint = () => {
     window.print();
@@ -221,7 +227,7 @@ export default function Confirmation() {
           </button>
           
           <button
-            onClick={() => window.location.href = `mailto:?subject=Space Force Pass Access Appointment Confirmation&body=${getEmailBody()}`}
+            onClick={handleEmail}
             className="px-6 py-4 rounded-lg border-2 border-divider hover:border-primary flex items-center justify-center font-medium transition-all"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
