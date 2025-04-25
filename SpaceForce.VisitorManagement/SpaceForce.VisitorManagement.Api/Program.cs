@@ -88,13 +88,30 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<SfDbContext>();
-    await db.Database.MigrateAsync();
-    
-    // Seed the database with sample data for development
-    if (app.Environment.IsDevelopment())
+    try 
     {
-        await SpaceForce.VisitorManagement.Data.Seeds.SampleDataSeeder.SeedSampleDataAsync(db);
+        var db = scope.ServiceProvider.GetRequiredService<SfDbContext>();
+        
+        // Always recreate the database schema
+        Console.WriteLine("Ensuring database is created...");
+        await db.Database.EnsureDeletedAsync();
+        await db.Database.EnsureCreatedAsync();
+        
+        Console.WriteLine("Database schema created successfully");
+        
+        // Seed the database with sample data for development
+        if (app.Environment.IsDevelopment())
+        {
+            Console.WriteLine("Seeding sample data...");
+            await SpaceForce.VisitorManagement.Data.Seeds.SampleDataSeeder.SeedSampleDataAsync(db);
+            Console.WriteLine("Sample data seeded successfully");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred during database initialization: {ex.Message}");
+        Console.WriteLine(ex.StackTrace);
+        // Continue app startup even if DB setup fails
     }
 }
 

@@ -346,7 +346,7 @@ export default function Barcode({ bookingId }: BarcodeProps) {
       </div>
       
       {/* Custom styling for QR code scanning effect */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{__html: `
         .qr-code-container {
           position: relative;
           padding: 0.5rem;
@@ -400,7 +400,7 @@ export default function Barcode({ bookingId }: BarcodeProps) {
           51% { top: 0; opacity: 0.7; }
           100% { top: 0; opacity: 0.7; }
         }
-      `}</style>
+      `}} />
     </div>
   );
 }

@@ -23,6 +23,10 @@ COPY --from=build /app/out .
 # Create directory for logs
 RUN mkdir -p /app/logs
 
+# Add entrypoint script
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+
 # Expose the port
 EXPOSE 80
 EXPOSE 443
@@ -34,4 +38,4 @@ ENV DB__UserId=postgres
 ENV DB__Password=mysecretpassword
 ENV DB__Port=5432
 
-ENTRYPOINT ["dotnet", "SpaceForce.VisitorManagement.Api.dll"]
+ENTRYPOINT ["/app/entrypoint.sh"]
