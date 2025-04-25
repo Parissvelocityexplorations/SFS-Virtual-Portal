@@ -5,8 +5,8 @@ import KioskLayout from '~/components/KioskLayout';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Pass Access Kiosk - Start" },
-    { name: "description", content: "Welcome to the Pass Access Kiosk" },
+    { title: "Appointment Portal - Start" },
+    { name: "description", content: "Welcome to the Space Force Appointment Portal" },
   ];
 };
 
@@ -40,7 +40,7 @@ export default function KioskIndex() {
   return (
     <KioskLayout 
       currentStep={0} 
-      title="Welcome to the Pass Access Kiosk"
+      title="Welcome to the Appointment Portal"
       showBackButton={false}
     >
       <div className="py-8">

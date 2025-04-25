@@ -141,38 +141,54 @@ export default function KioskLayout({
   };
 
   return (
-    <div className="min-h-screen bg-geometric">
+    <div className="min-h-screen space-pattern relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Space-themed decorative elements */}
+        <div className="absolute top-[10%] right-[15%] w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-60 animate-pulse" />
+        <div className="absolute bottom-[20%] left-[10%] w-96 h-96 bg-secondary/5 rounded-full blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-[40%] left-[25%] w-48 h-48 bg-accent/5 rounded-full blur-3xl opacity-40 animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
       {/* Page content */}
-      <div className="mx-auto max-w-5xl px-4 md:px-8 pt-0 pb-12">
+      <div className="mx-auto max-w-5xl px-4 md:px-8 pt-0 pb-12 relative z-10">
         {/* Top header bar */}
-        <header className="flex items-center justify-between py-4 md:py-6 border-b border-divider mb-6 md:mb-8">
-          <div className="flex items-center">
-            <h1 className="text-xl md:text-2xl font-bold text-text-primary">
-              Pass Access Kiosk
-            </h1>
+        <header className="flex items-center justify-between py-4 md:py-5 border-b border-divider/40 mb-6 md:mb-8 backdrop-blur-sm bg-white/60 sticky top-0 z-20 rounded-b-lg shadow-sm">
+          <div className="flex items-center pl-3">
+            <div className="flex items-center">
+              <img 
+                src="/Space_Launch_Delta_45_emblem 2.png" 
+                alt="Space Launch Delta 45" 
+                className="h-12 w-auto mr-4 self-center" 
+              />
+              <h1 className="text-xl md:text-2xl font-bold text-text-primary tracking-tight bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent self-center mt-1.5">
+                Space Force Appointment Portal
+              </h1>
+            </div>
           </div>
           
           <div className="flex items-center">
             <button 
               onClick={() => navigate('/')}
-              className="text sm flex items-center rounded-md"
+              className="btn-text btn-icon btn-icon-left rounded-md hover:bg-primary/10 transition-all"
+              aria-label="Return to Home"
             >
-              <svg className="left w-4 h-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="btn-icon-left w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
               </svg>
-              Exit Kiosk
+              Return to Home
             </button>
           </div>
         </header>
         
         {/* Main content area */}
-        <div className="bg-surface rounded-xl shadow-lg border border-divider p-6 md:p-8 relative overflow-hidden">
-          {/* Decorative accent strip */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-secondary"></div>
+        <div className="backdrop-blur-sm bg-white/90 rounded-xl shadow-lg p-6 md:p-8 relative overflow-hidden">
+          <div className="absolute -top-16 -right-16 w-32 h-32 bg-primary/5 rounded-full blur-xl opacity-70" />
+          <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-secondary/5 rounded-full blur-xl opacity-70" />
           
           {/* Progress steps with flowing transitions */}
           {showProgressSteps && (
-            <div className="progress-container">
+            <div className={`progress-container fade-in ${isProgressAnimating ? 'animating' : ''}`}>
               <ProgressSteps 
                 steps={steps} 
                 currentStep={animatingStep}
@@ -184,26 +200,28 @@ export default function KioskLayout({
           )}
           
           {/* Page heading with back button */}
-          <div className="mb-8 flex items-center">
+          <div className="mb-8 flex items-center fade-in-delay-1">
             {showBackButton && (
               <button 
                 onClick={handleBackWithTransition}
-                className="outline sm mr-4 flex items-center font-medium"
+                className="btn-outline btn-sm btn-icon btn-icon-left mr-4 flex items-center font-medium"
                 aria-label="Go back"
               >
-                <svg className="left w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="btn-icon-left w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Back
               </button>
             )}
-            <h2 className="text-2xl font-bold text-text-primary tracking-tight">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-text-primary tracking-tight">
+              {title}
+            </h2>
           </div>
           
-          {/* Main content with page transition */}
+          {/* Main content with enhanced page transition */}
           <div 
             ref={contentRef}
-            className={`relative transition-all duration-500 ease-in-out ${
+            className={`relative transition-all duration-500 ease-in-out z-10 fade-in-delay-2 ${
               isPageTransitioning 
                 ? pageTransitionDirection === 'forward' 
                   ? 'opacity-0 translate-x-8 scale-[0.98]' 
@@ -215,27 +233,33 @@ export default function KioskLayout({
           </div>
         </div>
         
-        {/* Footer */}
-        <footer className="mt-8 px-4 py-6 text-center text-text-secondary text-sm flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <span>&copy; 2025 Pass Access Kiosk. All rights reserved.</span>
+        {/* Enhanced Footer */}
+        <footer className="mt-8 py-6 text-center text-text-secondary text-sm flex flex-col md:flex-row justify-between items-center bg-white/30 backdrop-blur-sm rounded-lg px-6 border border-divider/30 shadow-sm">
+          <div className="mb-4 md:mb-0 flex items-center">
+            <div className="mr-2 w-5 h-5 text-primary opacity-80">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <span>&copy; 2025 Space Force Appointment Portal. All rights reserved.</span>
           </div>
           
           <div className="flex items-center space-x-6">
-            <a href="#" className="button text sm">
+            <a href="#" className="btn-text text-sm hover:underline focus:ring-primary/40 focus:ring-2 focus:outline-none rounded">
               Privacy Policy
             </a>
-            <a href="#" className="button text sm">
+            <a href="#" className="btn-text text-sm hover:underline focus:ring-primary/40 focus:ring-2 focus:outline-none rounded">
               DoD Section 508
             </a>
-            <a href="#" className="button text sm">
+            <a href="#" className="btn-text text-sm hover:underline focus:ring-primary/40 focus:ring-2 focus:outline-none rounded">
               Contact
             </a>
           </div>
         </footer>
       </div>
       
-      {/* Page transition style */}
+      {/* Enhanced Page transition style */}
       <style dangerouslySetInnerHTML={{ __html: `
         .progress-container {
           transition: all 0.4s ease-out;
@@ -245,6 +269,7 @@ export default function KioskLayout({
           opacity: 0.9;
         }
         
+        /* Enhanced animation timing functions for smoother motion */
         @keyframes flow-progress {
           0% { transform: translateY(0); opacity: 1; }
           40% { transform: translateY(-10px); opacity: 0; }
@@ -254,22 +279,41 @@ export default function KioskLayout({
         
         @keyframes slide-in-right {
           0% { transform: translateX(30px) scale(0.97); opacity: 0; }
+          60% { transform: translateX(-5px) scale(1.01); opacity: 1; }
           100% { transform: translateX(0) scale(1); opacity: 1; }
         }
         
         @keyframes slide-in-left {
           0% { transform: translateX(-30px) scale(0.97); opacity: 0; }
+          60% { transform: translateX(5px) scale(1.01); opacity: 1; }
           100% { transform: translateX(0) scale(1); opacity: 1; }
         }
         
         @keyframes slide-out-right {
           0% { transform: translateX(0) scale(1); opacity: 1; }
+          30% { transform: translateX(5px) scale(0.99); opacity: 0.9; }
           100% { transform: translateX(30px) scale(0.97); opacity: 0; }
         }
         
         @keyframes slide-out-left {
           0% { transform: translateX(0) scale(1); opacity: 1; }
+          30% { transform: translateX(-5px) scale(0.99); opacity: 0.9; }
           100% { transform: translateX(-30px) scale(0.97); opacity: 0; }
+        }
+        
+        /* Floating animations for background elements */
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0) translateX(0); }
+          25% { transform: translateY(-10px) translateX(5px); }
+          50% { transform: translateY(0) translateX(10px); }
+          75% { transform: translateY(10px) translateX(5px); }
+        }
+        
+        /* Gradient shimmer animation */
+        @keyframes gradient-shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
       `}} />
     </div>

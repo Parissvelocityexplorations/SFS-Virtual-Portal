@@ -4,14 +4,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#2CAFE3",    // Blue - Buttons, highlights, icons, links
-        secondary: "#33C048",  // Green - Submit buttons
-        "text-primary": "#666666",   // Dark Gray - Text, icons
-        divider: "#E5E5E5",    // Light Gray - Borders, section dividers, panel backgrounds
-        background: "#F5F9FB", // Pale Blue - Main page background
-        surface: "#FFFFFF",    // White - Main form panel backgrounds and inputs
-        link: "#0071BC",       // Link Blue - Used in hyperlinks
-        "text-secondary": "#6C757D", // Slate Gray - Hints, captions, disabled form labels
+        primary: {
+          DEFAULT: "#1976D2",
+          light: "#4791DB",
+          dark: "#0D47A1",
+        },
+        secondary: {
+          DEFAULT: "#2E7D32",
+          light: "#4CAF50",
+          dark: "#1B5E20",
+        },
+        "text-primary": "#1E293B",
+        "text-secondary": "#475569",
+        "text-tertiary": "#64748B",
+        divider: "#E2E8F0",
+        background: "#F1F5F9",
+        surface: "#FFFFFF",
+        panel: "#F8FAFC",
+        error: "#D32F2F",
+        warning: "#F59E0B",
+        success: "#2E7D32",
+        info: "#0288D1",
+        accent: "#FF4081",
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
