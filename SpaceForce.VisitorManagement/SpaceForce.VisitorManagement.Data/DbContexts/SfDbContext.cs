@@ -33,7 +33,8 @@ public class SfDbContext:DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<SfUser>().HasKey(x => x.Id);
-        modelBuilder.Entity<SfUser>().HasIndex(x => x.Email).IsUnique();
+        // Removed unique constraint on Email to allow multiple appointments with same email
+        modelBuilder.Entity<SfUser>().HasIndex(x => x.Email);
         modelBuilder.Entity<SfUser>().Property(x => x.Email).IsRequired();
         modelBuilder.Entity<SfUser>().Property(x => x.FirstName).IsRequired();
         modelBuilder.Entity<SfUser>().Property(x => x.LastName).IsRequired();

@@ -22,37 +22,20 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
         {
             try
             {
-                // Check if user with this email already exists
-                var existingUser = _dbContext.Users.FirstOrDefault(u => u.Email == testUser.Email);
-                
-                if (existingUser != null)
+                // CHANGED: Always create a new user record for each appointment
+                // This ensures each appointment has its own user data that won't be affected by future appointments
+                var user = new SfUser
                 {
-                    // Update existing user information
-                    existingUser.FirstName = testUser.FirstName;
-                    existingUser.LastName = testUser.LastName;
-                    existingUser.PhoneNo = testUser.PhoneNo;
-                    
-                    _dbContext.Users.Update(existingUser);
-                    _dbContext.SaveChanges();
-                    
-                    return Ok(existingUser); // Return the existing user with ID
-                }
-                else
-                {
-                    // Create a new user
-                    var user = new SfUser
-                    {
-                        FirstName = testUser.FirstName,
-                        LastName = testUser.LastName,
-                        Email = testUser.Email,
-                        PhoneNo = testUser.PhoneNo
-                    };
+                    FirstName = testUser.FirstName,
+                    LastName = testUser.LastName,
+                    Email = testUser.Email,
+                    PhoneNo = testUser.PhoneNo
+                };
 
-                    _dbContext.Users.Add(user);
-                    _dbContext.SaveChanges();
-                    
-                    return Ok(user); // Return the newly created user with ID
-                }
+                _dbContext.Users.Add(user);
+                _dbContext.SaveChanges();
+                
+                return Ok(user); // Return the newly created user with ID
             }
             catch (Exception e)
             {
