@@ -458,7 +458,7 @@ export default function ProgressSteps({
                         transition === 'backward' && index === prevStep ? 'progress-checkmark-exit' : 'progress-checkmark'
                       )} 
                       fill="none" 
-                      stroke="currentColor" 
+                      stroke={isCompleted ? 'white' : 'currentColor'} 
                       viewBox="0 0 24 24"
 
                     >
