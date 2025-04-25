@@ -229,7 +229,7 @@ export default function Review() {
       <div className="flex justify-center mt-8 space-x-6">
         <button
           onClick={handleBack}
-          className="px-8 py-4 rounded-lg border-2 border-primary text-primary font-medium transition-all hover:bg-primary hover:text-white"
+          className="px-8 py-4 rounded-lg border-2 border-primary text-text font-medium transition-all hover:bg-primary hover:text-white"
         >
           Edit Appointment
         </button>

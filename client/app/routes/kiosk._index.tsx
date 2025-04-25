@@ -70,7 +70,7 @@ export default function KioskIndex() {
           
           <button 
             onClick={() => handleDbidsChoice(false)}
-            className="border-2 border-divider text-text-primary py-6 px-8 rounded-lg text-xl font-medium 
+            className="border-2 border-divider text-white py-6 px-8 rounded-lg text-xl font-medium 
                        hover:border-primary transition-all duration-300 transform hover:-translate-y-1 
                        shadow-sm hover:shadow-md flex flex-col items-center justify-center"
             aria-label="No, I need to enroll"
