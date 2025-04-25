@@ -160,7 +160,7 @@ export default function Schedule() {
             </p>
           </div>
         )}
-        
+      
         <p className="text-text-secondary mb-6">
           Please select a date and time for your appointment:
         </p>
