@@ -122,7 +122,9 @@ export default function KioskIndex() {
               href="https://dbids-global-enroll.dmdc.mil/preenrollui/#/landing-page" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-secondary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition-all"
+              style={{textDecoration: 'none',color : 'white'}}
+              className="hover:border-primary transition-all duration-300 transform hover:-translate-y-1 
+                       shadow-sm hover:shadow-md inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-secondary hover:white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition-all"
               aria-label="Go to DBIDS Pre-Enrollment Site"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
