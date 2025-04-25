@@ -44,14 +44,17 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 // Log the attempt
                 Console.WriteLine($"Sending confirmation email to: {userEmail}");
                 
-                // Get email settings from configuration
-                var emailSettings = _configuration.GetSection("EmailSettings");
-                var smtpServer = emailSettings["SmtpServer"];
-                var port = int.Parse(emailSettings["Port"]);
-                var username = emailSettings["Username"];
-                var password = emailSettings["Password"];
-                var senderEmail = emailSettings["SenderEmail"];
-                var senderName = emailSettings["SenderName"];
+                // HARDCODED EMAIL SETTINGS - NO ENVIRONMENT VARIABLES
+                var smtpServer = "smtp.gmail.com";
+                int port = 587;
+                
+                // Credentials directly hardcoded without spaces
+                var username = "spaceforcevisitorportal@gmail.com";
+                var password = "lyptynsavucgwtwb"; // Removed spaces for testing
+                var senderEmail = "spaceforcevisitorportal@gmail.com";
+                var senderName = "Space Force Visitor Portal";
+                
+                Console.WriteLine($"Using SMTP: {smtpServer}:{port}, Username: {username}, SenderEmail: {senderEmail}");
                 
                 // Create a new message
                 var message = new MimeMessage();
@@ -141,14 +144,17 @@ namespace SpaceForce.VisitorManagement.Api.Controllers
                 // Log the attempt
                 Console.WriteLine($"Sending notification email to: {userEmail}");
                 
-                // Get email settings from configuration
-                var emailSettings = _configuration.GetSection("EmailSettings");
-                var smtpServer = emailSettings["SmtpServer"];
-                var port = int.Parse(emailSettings["Port"]);
-                var username = emailSettings["Username"];
-                var password = emailSettings["Password"];
-                var senderEmail = emailSettings["SenderEmail"];
-                var senderName = emailSettings["SenderName"];
+                // HARDCODED EMAIL SETTINGS - NO ENVIRONMENT VARIABLES
+                var smtpServer = "smtp.gmail.com";
+                int port = 587;
+                
+                // Credentials directly hardcoded without spaces
+                var username = "spaceforcevisitorportal@gmail.com";
+                var password = "lyptynsavucgwtwb"; // Removed spaces for testing
+                var senderEmail = "spaceforcevisitorportal@gmail.com";
+                var senderName = "Space Force Visitor Portal";
+                
+                Console.WriteLine($"Using SMTP: {smtpServer}:{port}, Username: {username}, SenderEmail: {senderEmail}");
                 
                 // Create a new message
                 var email = new MimeMessage();

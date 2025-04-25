@@ -410,7 +410,7 @@ export default function Calendar({
       </div>
       
       {/* Add custom animations */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{__html: `
         /* Calendar day selection pulse animation */
         @keyframes calendar-day-pulse {
           0% { box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.4); }
@@ -451,7 +451,7 @@ export default function Calendar({
             transform: translateY(0);
           }
         }
-      `}</style>
+      `}} />
     </div>
   );
 }
