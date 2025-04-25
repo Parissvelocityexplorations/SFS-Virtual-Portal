@@ -95,10 +95,11 @@ export default function KioskIndex() {
             </p>
             
             <ol className="list-decimal pl-5 space-y-4 mb-6 text-text-primary">
-              <li className="text-lg">Visit the <span className="font-medium">official DBIDS Global Pre-Enrollment Website</span></li>
+              <li className="text-lg">Visit the <span className="font-bold">official DBIDS Global Pre-Enrollment Website</span></li>
               <li className="text-lg">Complete all required forms with your personal information</li>
-              <li className="text-lg">Submit your application and <span className="font-medium">print your confirmation</span></li>
+              <li className="text-lg">Submit your application and <span className="font-bold">print your confirmation</span></li>
               <li className="text-lg">Bring your confirmation and a valid government ID to the Visitor Center</li>
+              <li className="text-lg">After completing DBIDS Pre-Enrollment, <span className="font-bold">please return here to create your visitor center appointment</span></li>
             </ol>
             
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
