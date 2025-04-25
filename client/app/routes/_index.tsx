@@ -20,7 +20,7 @@ export default function Index() {
               alt="Space Launch Delta 45" 
               className="h-16 mr-4" 
             />
-            <h1 className="text-3xl font-bold">Space Force Visitor Portal</h1>
+            <h1 className="text-3xl text-white font-bold">Space Force Visitor Portal</h1>
           </div>
           <Link
             to="/admin/signin"
