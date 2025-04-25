@@ -36,13 +36,13 @@ services:
       - DB__Password=mysecretpassword
       - DB__Port=5432
       - ASPNETCORE_URLS=http://+:80
-      # Email Settings from .env
-      - EmailSettings__SmtpServer=${EMAIL_SMTP_SERVER}
-      - EmailSettings__Port=${EMAIL_SMTP_PORT}
-      - EmailSettings__Username=${EMAIL_USERNAME}
-      - EmailSettings__Password=${EMAIL_PASSWORD}
-      - EmailSettings__SenderEmail=${EMAIL_SENDER_EMAIL}
-      - EmailSettings__SenderName=${EMAIL_SENDER_NAME}
+      # Email Settings hardcoded
+      - EmailSettings__SmtpServer=smtp.gmail.com
+      - EmailSettings__Port=587
+      - EmailSettings__Username=spaceforcevisitorportal@gmail.com
+      - EmailSettings__Password=lypt ynsa vucg wtwb
+      - EmailSettings__SenderEmail=spaceforcevisitorportal@gmail.com
+      - EmailSettings__SenderName=Space Force Visitor Portal
     depends_on:
       - postgres
     networks:

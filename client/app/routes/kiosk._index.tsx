@@ -57,7 +57,7 @@ export default function KioskIndex() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-10">
           <button 
             onClick={() => handleDbidsChoice(true)}
-            className="bg-primary text-white py-6 px-8 rounded-lg text-xl font-medium 
+            className="bg-secondary text-white py-6 px-8 rounded-lg text-xl font-medium 
                       hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 
                       shadow-md hover:shadow-lg flex flex-col items-center justify-center"
             aria-label="Yes, I have a DBIDS card"
@@ -95,10 +95,11 @@ export default function KioskIndex() {
             </p>
             
             <ol className="list-decimal pl-5 space-y-4 mb-6 text-text-primary">
-              <li className="text-lg">Visit the <span className="font-medium">official DBIDS Global Pre-Enrollment Website</span></li>
+              <li className="text-lg">Visit the <span className="font-bold">official DBIDS Global Pre-Enrollment Website</span></li>
               <li className="text-lg">Complete all required forms with your personal information</li>
-              <li className="text-lg">Submit your application and <span className="font-medium">print your confirmation</span></li>
+              <li className="text-lg">Submit your application and <span className="font-bold">print your confirmation</span></li>
               <li className="text-lg">Bring your confirmation and a valid government ID to the Visitor Center</li>
+              <li className="text-lg">After completing DBIDS Pre-Enrollment, <span className="font-bold">please return here to create your visitor center appointment</span></li>
             </ol>
             
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">

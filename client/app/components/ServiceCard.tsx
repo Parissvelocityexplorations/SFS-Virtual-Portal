@@ -207,7 +207,7 @@ export default function ServiceCard({
       </div> */}
 
       {/* Add keyframe animations for the ripple effect */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{__html: `
         @keyframes ripple {
           to {
             transform: translate(-50%, -50%) scale(30);
@@ -218,7 +218,7 @@ export default function ServiceCard({
         .animate-ripple {
           animation: ripple 0.7s ease-out forwards;
         }
-      `}</style>
+      `}} />
     </div>
   );
 }
