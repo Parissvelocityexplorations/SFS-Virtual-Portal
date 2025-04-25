@@ -27,9 +27,9 @@ export default function ServiceSelection() {
     lastName: ''
   });
   
-  // Load user data when component mounts
   useEffect(() => {
     const storedUserData = localStorage.getItem('visitorInfo');
+    console.log('👀 visitorInfo:', storedUserData); // ✅ Debug log
     if (storedUserData) {
       try {
         const parsedData = JSON.parse(storedUserData);
@@ -41,10 +41,10 @@ export default function ServiceSelection() {
         console.error('Error parsing user data:', e);
       }
     } else {
-      // If no user data, redirect back to information page
       navigate('/kiosk/service');
     }
   }, [navigate]);
+  
 
   const services: Service[] = [
     {
