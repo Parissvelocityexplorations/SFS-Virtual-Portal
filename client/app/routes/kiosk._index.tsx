@@ -57,7 +57,7 @@ export default function KioskIndex() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-10">
           <button 
             onClick={() => handleDbidsChoice(true)}
-            className="bg-primary text-white py-6 px-8 rounded-lg text-xl font-medium 
+            className="bg-secondary text-white py-6 px-8 rounded-lg text-xl font-medium 
                       hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 
                       shadow-md hover:shadow-lg flex flex-col items-center justify-center"
             aria-label="Yes, I have a DBIDS card"

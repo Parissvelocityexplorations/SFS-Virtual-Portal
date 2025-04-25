@@ -80,7 +80,7 @@ export default function Index() {
           <div className="flex justify-center">
             <Link
               to="/kiosk"
-              className="btn-primary btn-lg flex items-center justify-center w-64 transition-all transform hover:scale-105"
+              className="btn-primary btn-lg flex items-center justify-center w-64 transition-all transform hover:scale-105 hover:text-white"
             >
               Get Started
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
