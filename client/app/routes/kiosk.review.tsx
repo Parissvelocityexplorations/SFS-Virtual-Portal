@@ -164,7 +164,7 @@ export default function Review() {
           <div className="border border-divider rounded-lg p-6 transition-all hover:shadow-md">
             <div className="flex items-center mb-4">
               <div className="bg-primary bg-opacity-10 rounded-full p-3 mr-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path>
                 </svg>
               </div>
@@ -185,7 +185,7 @@ export default function Review() {
           <div className="border border-divider rounded-lg p-6 transition-all hover:shadow-md">
             <div className="flex items-center mb-4">
               <div className="bg-primary bg-opacity-10 rounded-full p-3 mr-4">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
               </div>
@@ -216,7 +216,7 @@ export default function Review() {
             <div className="ml-3">
               <h4 className="text-yellow-800 font-medium">Important Information</h4>
               <ul className="mt-2 list-disc pl-5 text-yellow-700 space-y-1">
-                <li>Please arrive 15 minutes before your scheduled time</li>
+                <li>Please arrive <strong>1 HOUR</strong> before your scheduled time</li>
                 <li>Bring all required documentation for your service type</li>
                 <li>Your appointment barcode will be available after confirmation</li>
                 <li>Rescheduling requires 24-hour notice</li>

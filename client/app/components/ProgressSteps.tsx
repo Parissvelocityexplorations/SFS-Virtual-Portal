@@ -342,14 +342,16 @@ export default function ProgressSteps({
         <div className="flex justify-between items-center relative">
           {/* Background connection line */}
           <div 
-            className="absolute top-1/2 left-0 right-0 h-1.5 bg-divider -translate-y-1/2 z-0 rounded-full shadow-inner"
+          style={{top:"23px"}}
+            className="absolute left-0 right-0 h-1.5 bg-divider -translate-y-1/2 z-0 rounded-full shadow-inner"
             aria-hidden="true"
           />
           
           {/* Progress fill with smooth flowing animation */}
           <div 
-            className="absolute top-1/2 left-0 h-1.5 -translate-y-1/2 z-0 rounded-full overflow-hidden transition-all duration-500 ease-in-out"
+            className="absolute left-0 h-1.5 -translate-y-1/2 z-0 rounded-full overflow-hidden transition-all duration-500 ease-in-out"
             style={{ 
+              top: "23px",
               width: `${animatedProgressPercentage}%`,
               background: theme.bgGradient,
               boxShadow: `0 0 8px ${theme.main}80`,
@@ -361,6 +363,7 @@ export default function ProgressSteps({
               <div 
                 className="absolute inset-0 opacity-70"
                 style={{
+                  top:"23px",
                   background: `linear-gradient(90deg, transparent 0%, ${theme.light}60 50%, transparent 100%)`,
                   animation: 'progress-flow 2s ease-out',
                   width: '200%',
@@ -458,7 +461,7 @@ export default function ProgressSteps({
                         transition === 'backward' && index === prevStep ? 'progress-checkmark-exit' : 'progress-checkmark'
                       )} 
                       fill="none" 
-                      stroke="currentColor" 
+                      stroke={isCompleted ? 'white' : 'currentColor'} 
                       viewBox="0 0 24 24"
 
                     >
