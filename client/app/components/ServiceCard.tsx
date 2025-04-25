@@ -178,10 +178,10 @@ export default function ServiceCard({
         </span>
       </div>
       
-      {/* Enhanced military-inspired detail for selected state */}
+      {/* Enhanced military-inspired detail for selected state
       {selected && (
-        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-primary-light to-primary-dark shimmer"></div>
-      )}
+        // <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-primary-light to-primary-dark shimmer"></div>
+      )} */}
       
       {/* Interactive hover state bottom decoration */}
       {!selected && (
@@ -192,7 +192,7 @@ export default function ServiceCard({
         `}></div>
       )}
 
-      {/* Add animated corner marker for visual interest */}
+      {/* Add animated corner marker for visual interest
       <div className={`
         absolute -top-6 -right-6 w-12 h-12 
         ${selected ? 'opacity-100' : 'opacity-0'}
@@ -204,7 +204,7 @@ export default function ServiceCard({
           border-b-[12px] border-b-primary
           border-r-[12px] border-r-transparent">
         </div>
-      </div>
+      </div> */}
 
       {/* Add keyframe animations for the ripple effect */}
       <style jsx>{`
