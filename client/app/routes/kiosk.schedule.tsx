@@ -195,7 +195,7 @@ export default function Schedule() {
       <div className="bg-white p-6 rounded-lg shadow-md border border-divider mb-8">
         <h3 className="font-medium text-lg mb-3 text-text-primary">Appointment Guidelines</h3>
         <ul className="list-disc pl-5 space-y-2 text-text-secondary">
-          <li>Please arrive 15 minutes before your scheduled appointment time</li>
+          <li>Please arrive <strong>1 HOUR</strong> before your scheduled appointment time</li>
           <li>Bring a valid government-issued photo ID</li>
           <li>Canceled appointments require 24-hour notice</li>
           <li>For {selectedService === 'vhic' ? 'Veteran Health ID Card' : 'DBIDS'} processing, additional documentation may be required</li>
