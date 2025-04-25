@@ -1,68 +1,97 @@
+import React from 'react';
+import { Link } from '@remix-run/react';
 import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "SFS Virtual Portal" },
-    { name: "description", content: "Welcome to the SFS Virtual Portal" },
+    { title: "Space Force Visitor Portal" },
+    { name: "description", content: "Welcome to the Space Force Visitor Portal" },
   ];
 };
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-geometric p-8">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Pass Access Kiosk</h1>
-          <p className="text-text-secondary text-xl">Schedule and manage base access passes</p>
-        </header>
-
-        <main>
-          <section className="mb-10">
-            <div className="card bg-surface shadow-md p-6 rounded-lg">
-              <h2 className="text-2xl font-semibold mb-4 text-text-primary">Getting Started</h2>
-              <p className="mb-4">Schedule your base access pass through our easy-to-use kiosk system.</p>
-              <a href="/kiosk" className="button secondary xl">
-                Start Booking Process
-                <svg className="right w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <header className="bg-primary text-white p-6">
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Space Force Visitor Portal</h1>
+        </div>
+      </header>
+      
+      <main className="flex-grow container mx-auto py-10 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
+            <div className="bg-primary bg-opacity-10 p-5 rounded-full mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              </svg>
             </div>
-          </section>
+            <h2 className="text-2xl font-bold text-primary mb-4">Visitor Kiosk</h2>
+            <p className="text-gray-600 text-center mb-8">
+              Schedule appointments and request passes for base access
+            </p>
+            <Link
+              to="/kiosk"
+              className="bg-primary hover:bg-opacity-90 text-white py-3 px-8 rounded-lg font-semibold transition-all transform hover:-translate-y-1"
+            >
+              Start Here
+            </Link>
+          </div>
           
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <div className="card bg-surface shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3 text-text-primary">Kiosk Mode</h3>
-              <p className="text-text-secondary mb-4">Use barcode scanning to check in visitors with existing bookings.</p>
-              <a href="/kiosk/scanner" className="button text">
-                Enter Kiosk Mode
-                <svg className="right w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
+          <div className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
+            <div className="bg-secondary bg-opacity-10 p-5 rounded-full mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-secondary mb-4">Admin Portal</h2>
+            <p className="text-gray-600 text-center mb-8">
+              Manage visitor appointments and monitor queue status
+            </p>
+            <Link
+              to="/admin/signin"
+              className="bg-secondary hover:bg-opacity-90 text-white py-3 px-8 rounded-lg font-semibold transition-all transform hover:-translate-y-1"
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+        
+        <div className="mt-12 bg-white rounded-xl shadow-md p-8 max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Visitor Information</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="border border-gray-200 p-5 rounded-lg">
+              <h3 className="text-lg font-medium text-gray-800 mb-2">Base Access Hours</h3>
+              <p className="text-gray-600">Monday - Friday: 7:30 a.m. to 3 p.m.</p>
+              <p className="text-gray-600">Saturday & Sunday: Closed</p>
             </div>
             
-            <div className="card bg-surface shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3 text-text-primary">DBIDS Enrollment</h3>
-              <p className="text-text-secondary mb-4">Need a DBIDS? Complete the pre-enrollment process online.</p>
-              <a href="https://dbids-enrollment.example.gov" target="_blank" rel="noopener noreferrer" className="button text">
-                DBIDS Pre-Enrollment
-                <svg className="right w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
+            <div className="border border-gray-200 p-5 rounded-lg">
+              <h3 className="text-lg font-medium text-gray-800 mb-2">Required Documents</h3>
+              <p className="text-gray-600">Valid photo ID</p>
+              <p className="text-gray-600">Appointment confirmation</p>
+              <p className="text-gray-600">Service-specific documentation</p>
             </div>
-          </section>
-          
-        </main>
-
-        <footer className="pt-10 border-t border-divider">
-          <p className="text-text-secondary text-center">&copy; 2025 Pass Access Kiosk. All rights reserved.</p>
-          <p className="text-center mt-2">
-            <a href="#" className="text-link hover:underline">DoD Section 508</a>
-          </p>
-        </footer>
-      </div>
+            
+            <div className="border border-gray-200 p-5 rounded-lg">
+              <h3 className="text-lg font-medium text-gray-800 mb-2">Contact Information</h3>
+              <p className="text-gray-600">Visitor Control Center</p>
+              <p className="text-gray-600">Phone: (555) 123-4567</p>
+              <p className="text-gray-600">Email: vcc@spaceforce.mil</p>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <footer className="bg-gray-800 text-white p-6">
+        <div className="container mx-auto">
+          <div className="text-center">
+            <p>Space Force Visitor Management Portal</p>
+            <p className="text-sm text-gray-400 mt-2">© {new Date().getFullYear()} United States Space Force. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

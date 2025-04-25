@@ -25,17 +25,62 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body suppressHydrationWarning className="bg-gray-50">
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              // Function to remove Grammarly elements that cause hydration errors
+              const removeElements = () => {
+                // Remove grammarly elements
+                const grammarlyElements = document.querySelectorAll('grammarly-desktop-integration');
+                if(grammarlyElements.length > 0) {
+                  grammarlyElements.forEach(e => e.remove());
+                }
+              };
+              
+              // Run immediately
+              removeElements();
+              
+              // Also run after DOM is fully loaded
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', removeElements);
+              }
+              
+              // And after everything is loaded (images, styles, etc.)
+              window.addEventListener('load', removeElements);
+              
+              // Set up a MutationObserver to catch dynamically added elements
+              const observer = new MutationObserver(function(mutations) {
+                removeElements();
+              });
+              
+              // Start observing once the DOM is ready
+              if (document.body) {
+                observer.observe(document.body, { 
+                  childList: true, 
+                  subtree: true 
+                });
+              } else {
+                document.addEventListener('DOMContentLoaded', function() {
+                  observer.observe(document.body, { 
+                    childList: true, 
+                    subtree: true 
+                  });
+                });
+              }
+            })();
+          `
+        }} />
       </body>
     </html>
   );

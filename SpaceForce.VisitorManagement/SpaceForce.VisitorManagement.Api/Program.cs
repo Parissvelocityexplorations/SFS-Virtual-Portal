@@ -30,8 +30,8 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", b =>
 }));
 builder.Services.AddControllers().AddJsonOptions(o =>
 {
-    o.JsonSerializerOptions
-        .PropertyNameCaseInsensitive = true;
+    o.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    o.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
 builder.Services.AddControllers();
@@ -90,12 +90,25 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<SfDbContext>();
     await db.Database.MigrateAsync();
+    
+    // Seed the database with sample data for development
+    if (app.Environment.IsDevelopment())
+    {
+        await SpaceForce.VisitorManagement.Data.Seeds.SampleDataSeeder.SeedSampleDataAsync(db);
+    }
 }
 
 app.UseHttpsRedirection();
 app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Add controller for the 'users' route to match the frontend API requests
+app.MapControllerRoute(
+    name: "users",
+    pattern: "users/{id}",
+    defaults: new { controller = "User", action = "GetUser" }
+);
 
 app.MapControllers();
 

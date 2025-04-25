@@ -58,23 +58,33 @@ export default function Confirmation() {
         
         // Automatically trigger email confirmation if email is available
         if (parsedUserData.email) {
-          setTimeout(() => {
-            // This will trigger the email client to open with the confirmation details
-            const serviceName = storedService ? getServiceName(storedService) : 'Selected Service';
-            const name = `${parsedUserData.firstName} ${parsedUserData.lastName}`;
-            const date = JSON.parse(storedAppointment).formattedDate || 'Scheduled Date';
-            const time = JSON.parse(storedAppointment).time || 'Scheduled Time';
-            
-            const emailBody = `Hello ${name},%0A%0AYour Space Force Pass Access appointment has been confirmed!%0A%0AAppointment Details:%0A- Service: ${serviceName}%0A- Date: ${date}%0A- Time: ${time}%0A- Location: Patrick Space Force Base, FL 32925%0A- Confirmation ID: ${confirmId}%0A%0AImportant Information:%0A- Please arrive 15 minutes before your scheduled time%0A- Bring all required documentation for your service type%0A- Present this confirmation when you arrive%0A%0AThank you for using the Space Force Pass Access Kiosk.`;
-            
-            // In a production app, this would send the confirmation data to the backend
-            // For demo purposes, we'll just log what would be sent
-            console.log('Email confirmation would be sent to:', parsedUserData.email, {
-              subject: 'Space Force Pass Access Appointment Confirmation',
-              confirmationId: confirmId
-            });
-            
-            // No actual API call for demo
+          setTimeout(async () => {
+            try {
+              // This will actually send the email through the API
+              const serviceName = storedService ? getServiceName(storedService) : 'Selected Service';
+              const name = `${parsedUserData.firstName} ${parsedUserData.lastName}`;
+              const date = JSON.parse(storedAppointment).formattedDate || 'Scheduled Date';
+              const time = JSON.parse(storedAppointment).time || 'Scheduled Time';
+              
+              console.log('Sending email confirmation to:', parsedUserData.email);
+              
+              // Get the appointment date in correct format for the API
+              const appointmentDate = new Date(JSON.parse(storedAppointment).date);
+              
+              // Call the backend API to send the email
+              await axios.get(`/api/email/SendConfirmation`, {
+                params: {
+                  firstName: parsedUserData.firstName,
+                  lastName: parsedUserData.lastName,
+                  userEmail: parsedUserData.email,
+                  time: appointmentDate.toISOString()
+                }
+              });
+              
+              console.log('Email confirmation sent successfully');
+            } catch (error) {
+              console.error('Error sending email confirmation:', error);
+            }
           }, 1000);
         }
       } catch (e) {
@@ -203,15 +213,15 @@ export default function Confirmation() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-text-secondary">Service:</span>
-                <span className="font-medium">Visitor Pass</span>
+                <span className="font-medium">{selectedService ? getServiceName(selectedService) : 'Visitor Pass'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Date:</span>
-                <span className="font-medium">Saturday, April 26, 2025</span>
+                <span className="font-medium">{appointmentDetails?.formattedDate || 'Saturday, April 26, 2025'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Time:</span>
-                <span className="font-medium">2:00 PM</span>
+                <span className="font-medium">{appointmentDetails?.time || '2:00 PM'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-secondary">Location:</span>
@@ -265,13 +275,13 @@ export default function Confirmation() {
           <h4 className="text-lg font-medium mb-2 text-yellow-800">Appointment Summary</h4>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-yellow-800">Service:</div>
-            <div className="font-medium text-yellow-900">Visitor Pass</div>
+            <div className="font-medium text-yellow-900">{selectedService ? getServiceName(selectedService) : 'Visitor Pass'}</div>
             
             <div className="text-yellow-800">Date:</div>
-            <div className="font-medium text-yellow-900">Saturday, April 26, 2025</div>
+            <div className="font-medium text-yellow-900">{appointmentDetails?.formattedDate || 'Saturday, April 26, 2025'}</div>
             
             <div className="text-yellow-800">Time:</div>
-            <div className="font-medium text-yellow-900">2:00 PM</div>
+            <div className="font-medium text-yellow-900">{appointmentDetails?.time || '2:00 PM'}</div>
             
             <div className="text-yellow-800">Location:</div>
             <div className="font-medium text-yellow-900">Patrick Space Force Base, FL 32925</div>

@@ -6,24 +6,28 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "3001:5173"
     volumes:
       - ./client:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=5173
     # Ensures container exits cleanly on Ctrl+C
     tty: true
     stdin_open: true
     depends_on:
       - api
+    networks:
+      - sf-network
 
   api:
     build:
       context: ./SpaceForce.VisitorManagement
       dockerfile: Dockerfile
     ports:
-      - "5001:80"
+      - "5288:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DB__Server=postgres
@@ -31,8 +35,11 @@ services:
       - DB__UserId=postgres
       - DB__Password=mysecretpassword
       - DB__Port=5432
+      - ASPNETCORE_URLS=http://+:80
     depends_on:
       - postgres
+    networks:
+      - sf-network
 
   postgres:
     image: postgres:16-alpine
@@ -44,6 +51,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - sf-network
+
+networks:
+  sf-network:
+    driver: bridge
 
 volumes:
   postgres-data:

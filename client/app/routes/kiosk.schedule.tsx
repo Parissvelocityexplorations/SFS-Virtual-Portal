@@ -3,6 +3,7 @@ import { useNavigate } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/node';
 import KioskLayout from '~/components/KioskLayout';
 import Calendar from '~/components/Calendar';
+import axios from 'axios';
 
 export const meta: MetaFunction = () => {
   return [
@@ -64,20 +65,46 @@ export default function Schedule() {
         
         // Send to backend if user info and service are available
         if (userInfo && selectedService) {
-          // Create appointment data for API
-          const appointmentData = {
-            visitorId: userInfo.email, // Using email as unique identifier
-            serviceType: selectedService,
-            appointmentDate: selectedDate.toISOString(),
-            timeSlot: selectedTime,
-            status: "Scheduled"
-          };
-          
-          // In a production app, this would post to the API
-          // For demo purposes, we'll just log the data and continue
-          console.log('Appointment data that would be sent to backend:', appointmentData);
-          
-          // No actual API call for demo
+          try {
+            // First register the user if they don't exist
+            console.log('Creating or fetching user in database');
+            const userResponse = await axios.post('/api/users', {
+              firstName: userInfo.firstName,
+              lastName: userInfo.lastName,
+              email: userInfo.email,
+              phoneNo: userInfo.phone || '',
+              service: selectedService,
+              sponsor: userInfo.sponsor || ''
+            });
+            
+            console.log('User created/updated successfully:', userResponse.data);
+            const userId = userResponse.data.id;
+            
+            // Format the date combining selectedDate and selectedTime
+            const dateTimeParts = selectedTime.split(':');
+            const hours = parseInt(dateTimeParts[0]);
+            const minutes = parseInt(dateTimeParts[1].substring(0, 2));
+            const isPM = selectedTime.toLowerCase().includes('pm');
+            
+            // Create a new date object with hours and minutes
+            const appointmentDateTime = new Date(selectedDate);
+            appointmentDateTime.setHours(isPM && hours < 12 ? hours + 12 : hours);
+            appointmentDateTime.setMinutes(minutes);
+            
+            console.log('Creating appointment with date:', appointmentDateTime.toISOString());
+            
+            // Create the appointment
+            const appointmentResponse = await axios.post(`/api/appointments/userid/${userId}/date/${appointmentDateTime.toISOString()}`, userInfo);
+            
+            console.log('Appointment created successfully:', appointmentResponse.data);
+            
+            // Store the appointment ID for later reference
+            const appointmentData = appointmentResponse.data;
+            localStorage.setItem('appointmentId', appointmentData.id);
+          } catch (error) {
+            console.error('Error creating appointment in database:', error);
+            // Continue with the flow even if the API call fails
+          }
         }
         
         localStorage.setItem('appointmentDetails', JSON.stringify(appointmentDetails));
