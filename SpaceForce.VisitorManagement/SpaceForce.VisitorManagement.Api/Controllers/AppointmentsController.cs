@@ -269,22 +269,81 @@ public class AppointmentsController : ControllerBase
     {
         try 
         {
-            // Just log a confirmation for now but don't actually attempt to send email
-            // This way the app will continue to function without errors
-            Console.WriteLine($"[SIMULATED EMAIL] Would have sent confirmation to: {userEmail}");
-            Console.WriteLine($"[SIMULATED EMAIL] Visitor: {firstName} {lastName}");
-            Console.WriteLine($"[SIMULATED EMAIL] Appointment: {time.ToString("dddd, dd MMMM yyyy")}");
+            // Log the attempt
+            Console.WriteLine($"Sending confirmation email to: {userEmail}");
             
-            // Create a success message with QR code URL
+            // Get email settings from configuration
+            var emailSettings = _configuration.GetSection("EmailSettings");
+            var smtpServer = emailSettings["SmtpServer"];
+            var port = int.Parse(emailSettings["Port"]);
+            var username = emailSettings["Username"];
+            var password = emailSettings["Password"];
+            var senderEmail = emailSettings["SenderEmail"];
+            var senderName = emailSettings["SenderName"];
+            
+            // Create a new message
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(senderName, senderEmail));
+            message.To.Add(new MailboxAddress(firstName + " " + lastName, userEmail));
+            message.Subject = "Your Space Force Visitor Portal Appointment Confirmation";
+            
+            // Create QR code URL for the appointment
             string qrUrl = $"https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SFVP-{firstName}-{lastName}-{time.ToString("yyyyMMdd")}";
-            Console.WriteLine($"[SIMULATED EMAIL] QR Code URL: {qrUrl}");
             
-            // Don't throw an exception so the app continues to work
+            // Create message body with HTML
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = $@"
+            <html>
+            <body style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+                <div style='background-color: #1E3A8A; color: white; padding: 20px; text-align: center;'>
+                    <h1>Space Force Visitor Portal</h1>
+                </div>
+                <div style='padding: 20px;'>
+                    <h2>Appointment Confirmation</h2>
+                    <p>Hello {firstName} {lastName},</p>
+                    <p>Your appointment has been confirmed for:</p>
+                    <p style='font-weight: bold; font-size: 18px;'>{time.ToString("dddd, MMMM dd, yyyy")}</p>
+                    
+                    <div style='background-color: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0;'>
+                        <p>Please scan your QR code at the visitor kiosk upon arrival:</p>
+                        <div style='text-align: center;'>
+                            <img src='{qrUrl}' alt='QR Code' style='max-width: 150px;' />
+                        </div>
+                    </div>
+                    
+                    <p>Please arrive 15 minutes before your appointment with a valid ID.</p>
+                    <p>Thank you,<br>Space Force Visitor Management Team</p>
+                </div>
+            </body>
+            </html>";
+            
+            message.Body = bodyBuilder.ToMessageBody();
+            
+            // Send the email
+            using (var client = new SmtpClient())
+            {
+                // Accept all SSL certificates (for testing only)
+                client.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+                
+                // Connect to SMTP server
+                client.Connect(smtpServer, port, MailKit.Security.SecureSocketOptions.StartTls);
+                
+                // Authenticate with SMTP server
+                client.Authenticate(username, password);
+                
+                // Send the message
+                client.Send(message);
+                
+                // Disconnect from the server
+                client.Disconnect(true);
+            }
+            
+            Console.WriteLine($"Email sent successfully to: {userEmail}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error in simulated email: {ex.Message}");
-            // Don't rethrow since we're in simulation mode
+            Console.WriteLine($"Error sending email: {ex.Message}");
+            // Log but don't throw - we don't want appointment creation to fail if email fails
         }
     }
 }
